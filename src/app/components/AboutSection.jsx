@@ -25,8 +25,14 @@ const TAB_DATA = [
     id: "education",
     content: (
       <ul className="list-disc pl-2">
-        <Link href="https://www.lernia.se/utbildning/yrkeshogskoleutbildning/systemutvecklare-i-java-och-javascript/">
-          <li>Systemdeveloper in Java and JavaScript | Lernia</li>
+        <Link
+          href="https://www.lernia.se/utbildning/yrkeshogskoleutbildning/systemutvecklare-i-java-och-javascript/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <li className="text-blue-300 hover:underline hover:text-blue-500 cursor-pointer transition-colors duration-200">
+            Systemdeveloper in Java and JavaScript | Lernia
+          </li>
         </Link>
       </ul>
     ),
@@ -37,10 +43,14 @@ const TAB_DATA = [
     content: (
       <ul className="list-disc pl-2">
         <Link href="https://www.udemy.com/certificate/UC-ef294d0f-6d72-4947-9164-545980a0512d/">
-          <li>The Complete Full-Stack Web Development Bootcamp | Udemy</li>
+          <li className="text-blue-300 hover:underline hover:text-blue-500 cursor-pointer transition-colors duration-200">
+            The Complete Full-Stack Web Development Bootcamp | Udemy
+          </li>
         </Link>
         <Link href="https://www.freecodecamp.org/certification/ChristianFryksten/responsive-web-design">
-          <li>Responsive Web Design | freeCodeCamp </li>
+          <li className="text-blue-300 hover:underline hover:text-blue-500 cursor-pointer transition-colors duration-200">
+            Responsive Web Design | freeCodeCamp{" "}
+          </li>
         </Link>
       </ul>
     ),

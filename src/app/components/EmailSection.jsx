@@ -33,7 +33,7 @@ const EmailSection = () => {
         </div>
         <a
           href="mailto:christian@example.com?subject=Message from portfolio&body=Hello Christian,%0D%0A%0D%0A[Write your message here]"
-          className="bg-primary-500 hover:bg-primary-600 text-white font-medium py-2.5 px-5 rounded-lg inline-block"
+          className="bg-gradient-to-r from-blue-600 via-sky-500 to-indigo-600 hover:brightness-110 text-white font-semibold py-2.5 px-5 rounded-lg inline-block transition-all duration-200 shadow-md"
         >
           Send Email
         </a>

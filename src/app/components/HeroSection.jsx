@@ -53,7 +53,7 @@ const HeroSection = () => {
               repeat={Infinity}
             />
           </h1>
-          <p className="text-[#ADB7BE] text-base sm:text-lg mb-6 lg:text-xl">
+          <p className="text-white text-base sm:text-lg mb-6 lg:text-xl">
             I break things just to see how they work. Don’t worry, I fix them
             too.
           </p>
@@ -61,16 +61,16 @@ const HeroSection = () => {
             <Link
               href="/cv-christian-fryksten.pdf"
               download
-              className="px-1 inline-block py-1 w-full sm:w-fit rounded-full bg-gradient-to-br from-primary-500 to-secondary-500 hover:bg-slate-800 text-white mt-3"
+              className="px-1 inline-block py-1 w-full sm:w-fit rounded-full bg-gradient-to-r from-blue-600 via-sky-500 to-indigo-600 hover:brightness-110 transition-all text-white mt-3"
             >
-              <span className="block bg-[#121212] hover:bg-slate-800 rounded-full px-5 py-2">
+              <span className="block bg-[#0f172a] hover:bg-[#1e293b] rounded-full px-5 py-2 text-white font-semibold shadow-md transition-colors duration-200">
                 Download CV
               </span>
             </Link>
           </div>
         </motion.div>
         <motion.div
-          className="rounded-full bg-[#181818] w-[250px] h-[250px] lg:w-[400px] lg:h-[400px] relative overflow-hidden"
+          className="rounded-full bg-[#181818] w-[250px] h-[250px] lg:w-[400px] lg:h-[400px] relative overflow-hidden mt-10 mx-auto"
           animate={{ rotate: rotation }}
           transition={{ duration: 1, ease: "easeInOut" }}
         >
