@@ -13,7 +13,7 @@ const HeroSection = () => {
     const timer = setTimeout(() => {
       setRotation(360);
       setTimeout(() => {
-        setCurrentImage("/images/christian-fly.jpg");
+        setCurrentImage("/images/christian-fly.png");
       }, 1000);
     }, 2000);
 
