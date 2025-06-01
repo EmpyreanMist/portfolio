@@ -6,7 +6,7 @@ import Image from "next/image";
 const ProjectCard = ({ imgUrl, title, description, gitUrl, previewUrl }) => {
   return (
     <div>
-      <div className="relative group w-full h-52 md:h-72 rounded-t-xl overflow-hidden bg-black">
+      <div className="relative group w-full h-52 md:h-72 rounded-t-xl overflow-hidden bg-black ">
         <Image
           src={imgUrl}
           alt={title}
