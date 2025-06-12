@@ -6,12 +6,13 @@ import AboutSection from "./components/AboutSection";
 import ProjectsSection from "./components/ProjectsSection";
 import EmailSection from "./components/EmailSection";
 import Footer from "./components/Footer";
+import TechStackSection from "./components/TechStackSection";
 
 export default function Home() {
   const [laserLines, setLaserLines] = useState([]);
-  const [showLasers, setShowLasers] = useState(true);
+  const [showLasers, setShowLasers] = useState(false);
 
-  useEffect(() => {
+  const triggerLasers = () => {
     const height = document.body.scrollHeight;
     const numberOfLines = 30;
 
@@ -20,7 +21,6 @@ export default function Home() {
       possibleLines.push(y);
     }
 
-    // shuffle-funktion
     const shuffle = (array) => {
       for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -29,7 +29,6 @@ export default function Home() {
       return array;
     };
 
-    // shuffla och ta ut de första N utan dubbletter
     const uniqueLines = shuffle([...possibleLines]).slice(0, numberOfLines);
 
     const lines = uniqueLines.map((top) => ({
@@ -39,17 +38,20 @@ export default function Home() {
     }));
 
     setLaserLines(lines);
+    setShowLasers(true);
 
-    const timer = setTimeout(() => {
+    setTimeout(() => {
       setShowLasers(false);
     }, 2500);
+  };
 
-    return () => clearTimeout(timer);
+  useEffect(() => {
+    triggerLasers();
   }, []);
 
   return (
     <main className="relative flex min-h-screen flex-col overflow-hidden bg-black text-white">
-      {/* Lasrar */}
+      {/* Laser */}
       {showLasers && (
         <div className="absolute top-0 left-0 w-full h-full z-10 pointer-events-none">
           {laserLines.map((line, index) => (
@@ -68,10 +70,11 @@ export default function Home() {
 
       <Navbar />
       <div className="container relative z-20 mt-24 mx-auto px-12 py-4">
-        <HeroSection />
+        <HeroSection onDownloadCV={triggerLasers} />
         <AboutSection />
+        <TechStackSection />
         <ProjectsSection />
-        <EmailSection />
+        <EmailSection onSendEmail={triggerLasers} />
       </div>
       <Footer />
     </main>

@@ -5,7 +5,17 @@ import LinkedinIcon from "../../../public/linkedin-icon.svg";
 import Link from "next/link";
 import Image from "next/image";
 
-const EmailSection = () => {
+const EmailSection = ({ onSendEmail }) => {
+  const handleClick = () => {
+    onSendEmail?.(); // 🔫 Trigga lasrar
+
+    // Öppna mailto efter kort delay så laser syns först
+    setTimeout(() => {
+      window.location.href =
+        "mailto:christian@example.com?subject=Message from portfolio&body=Hello Christian,%0D%0A%0D%0A[Write your message here]";
+    }, 500);
+  };
+
   return (
     <section
       id="contact"
@@ -31,12 +41,12 @@ const EmailSection = () => {
             <Image src={LinkedinIcon} alt="Linkedin Icon" />
           </Link>
         </div>
-        <a
-          href="mailto:christian@example.com?subject=Message from portfolio&body=Hello Christian,%0D%0A%0D%0A[Write your message here]"
+        <button
+          onClick={handleClick}
           className="bg-gradient-to-r from-blue-600 via-sky-500 to-indigo-600 hover:brightness-110 text-white font-semibold py-2.5 px-5 rounded-lg inline-block transition-all duration-200 shadow-md"
         >
           Send Email
-        </a>
+        </button>
       </div>
     </section>
   );

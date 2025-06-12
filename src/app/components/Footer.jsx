@@ -8,7 +8,7 @@ const Footer = () => {
       <div className="container p-12 flex justify-between">
         <Link href={"/"}>
           <Image
-            src="/cf-logo.png"
+            src="/main-logo.png"
             alt="Christian Logo"
             width={50}
             height={50}

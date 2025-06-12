@@ -3,9 +3,8 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { TypeAnimation } from "react-type-animation";
 import { motion } from "framer-motion";
-import Link from "next/link";
 
-const HeroSection = () => {
+const HeroSection = ({ onDownloadCV }) => {
   const [currentImage, setCurrentImage] = useState("/images/christian.jpg");
   const [rotation, setRotation] = useState(0);
 
@@ -20,6 +19,18 @@ const HeroSection = () => {
     return () => clearTimeout(timer);
   }, []);
 
+  const handleDownload = () => {
+    onDownloadCV?.();
+    setTimeout(() => {
+      const link = document.createElement("a");
+      link.href = "/cv-christian-fryksten.pdf";
+      link.download = "Christian-Fryksten-CV.pdf";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }, 400);
+  };
+
   return (
     <section className="lg:py-16">
       <div className="grid grid-cols-1 sm:grid-cols-12">
@@ -33,7 +44,6 @@ const HeroSection = () => {
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600">
               Hello, I&apos;m{" "}
             </span>
-
             <br />
             <TypeAnimation
               sequence={[
@@ -58,15 +68,14 @@ const HeroSection = () => {
             too.
           </p>
           <div>
-            <Link
-              href="/cv-christian-fryksten.pdf"
-              download
+            <button
+              onClick={handleDownload}
               className="px-1 inline-block py-1 w-full sm:w-fit rounded-full bg-gradient-to-r from-blue-600 via-sky-500 to-indigo-600 hover:brightness-110 transition-all text-white mt-3"
             >
               <span className="block bg-[#0f172a] hover:bg-[#1e293b] rounded-full px-5 py-2 text-white font-semibold shadow-md transition-colors duration-200">
                 Download CV
               </span>
-            </Link>
+            </button>
           </div>
         </motion.div>
         <motion.div

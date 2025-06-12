@@ -29,7 +29,7 @@ const Navbar = () => {
       <div className="flex container lg:py-4 flex-wrap items-center justify-between mx-auto px-4 py-2">
         <Link href={"/"} className="z-50">
           <Image
-            src="/cf-logo.png"
+            src="/main-logo.png"
             alt="Christian Logo"
             width={50}
             height={50}

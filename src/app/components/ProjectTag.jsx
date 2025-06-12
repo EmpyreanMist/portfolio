@@ -1,15 +1,16 @@
 import React from "react";
 
 const ProjectTag = ({ name, onClick, isSelected }) => {
-  const buttonStyles = isSelected
-    ? "text-white border-blue-500"
-    : "text-[#ADB7BE] border-slate-600 hover:border-white";
   return (
     <button
-      className={`${buttonStyles} rounded-full border-2 px-6 py-3 text-xl cursor-pointer`}
       onClick={() => onClick(name)}
+      className={`px-1 py-1 rounded-full bg-gradient-to-r from-blue-600 via-sky-500 to-indigo-600 transition-all hover:brightness-110 ${
+        isSelected ? "" : "opacity-80"
+      }`}
     >
-      {name}
+      <span className="block bg-[#0f172a] hover:bg-[#1e293b] text-white px-7 py-3 text-lg font-semibold rounded-full shadow-md transition-colors duration-200">
+        {name}
+      </span>
     </button>
   );
 };

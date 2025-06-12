@@ -6,21 +6,6 @@ import Link from "next/link";
 
 const TAB_DATA = [
   {
-    title: "Skills",
-    id: "skills",
-    content: (
-      <ul className="list-disc pl-2">
-        <li>Node.js</li>
-        <li>Express</li>
-        <li>PostgreSQL</li>
-        <li>Git</li>
-        <li>GitHub</li>
-        <li>JavaScript</li>
-        <li>React</li>
-      </ul>
-    ),
-  },
-  {
     title: "Education",
     id: "education",
     content: (
@@ -49,7 +34,7 @@ const TAB_DATA = [
         </Link>
         <Link href="https://www.freecodecamp.org/certification/ChristianFryksten/responsive-web-design">
           <li className="text-blue-300 hover:underline hover:text-blue-500 cursor-pointer transition-colors duration-200">
-            Responsive Web Design | freeCodeCamp{" "}
+            Responsive Web Design | freeCodeCamp
           </li>
         </Link>
       </ul>
@@ -58,7 +43,7 @@ const TAB_DATA = [
 ];
 
 const AboutSection = () => {
-  const [tab, setTab] = useState("skills");
+  const [tab, setTab] = useState("education");
   const [isPending, startTransition] = useTransition();
 
   const handleTabChange = (id) => {
@@ -89,25 +74,16 @@ const AboutSection = () => {
           </p>
           <div className="flex flex-row justify-start mt-8">
             <TabButton
-              selectTab={() => handleTabChange("skills")}
-              active={tab === "skills"}
-            >
-              {" "}
-              Skills{" "}
-            </TabButton>
-            <TabButton
               selectTab={() => handleTabChange("education")}
               active={tab === "education"}
             >
-              {" "}
-              Education{" "}
+              Education
             </TabButton>
             <TabButton
               selectTab={() => handleTabChange("certifications")}
               active={tab === "certifications"}
             >
-              {" "}
-              Certifications{" "}
+              Certifications
             </TabButton>
           </div>
           <div className="mt-8">
