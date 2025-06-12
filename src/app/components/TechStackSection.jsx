@@ -35,7 +35,7 @@ export default function TechStackSection() {
       className="py-16 px-4 xl:px-16 text-white border-t border-[#33353F]"
     >
       <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-        Tech Stack I've Experimented With
+        Tech Stack I&apos;ve Experimented With
       </h2>
 
       <div className="space-y-12 flex flex-col items-center">
