@@ -36,3 +36,8 @@
 .animate-laser-line {
   animation: laser-line 2s linear infinite;
 }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 250px;
+}
