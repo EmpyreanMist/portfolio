@@ -14,7 +14,7 @@ export default function Home() {
 
   const triggerLasers = () => {
     const height = document.body.scrollHeight;
-    const numberOfLines = 30;
+    const numberOfLines = 65;
 
     const possibleLines = [];
     for (let y = 0; y < height; y += 50) {
@@ -49,6 +49,23 @@ export default function Home() {
     triggerLasers();
   }, []);
 
+  useEffect(() => {
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === "class") {
+          triggerLasers();
+        }
+      });
+    });
+
+    if (typeof window !== "undefined") {
+      const html = document.documentElement;
+      observer.observe(html, { attributes: true });
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <main
       className="relative flex min-h-screen flex-col overflow-hidden 
@@ -56,7 +73,6 @@ export default function Home() {
              text-gray-900 dark:text-white 
              transition-colors duration-300"
     >
-      {/* 🔵 HELTÄCKANDE blå blur-effekt i bakgrunden */}
       <div className="absolute inset-0 -z-10 pointer-events-none">
         <div
           className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] 
@@ -65,7 +81,6 @@ export default function Home() {
         />
       </div>
 
-      {/* ✨ Laser lines */}
       {showLasers && (
         <div className="absolute top-0 left-0 w-full h-full z-10 pointer-events-none">
           {laserLines.map((line, index) => {
