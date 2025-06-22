@@ -39,7 +39,7 @@ const projectsData = [
     id: 4,
     title: "Kino",
     description:
-      "Kino is a fullstack cinema website built with Next.js, MongoDB, and Supabase as part of a team project during my studies at Lernia. The platform allows users to browse movies, view details and trailers, book tickets for upcoming screenings, and leave reviews. It features user authentication, server-side rendering, SEO-friendly metadata, and a dynamic API structure. The frontend is styled for both desktop and mobile, and the backend includes integration tests and secure data handling.",
+      "Kino is a fullstack cinema website built with Next.js, MongoDB, and Supabase as part of a team project during my studies at Lernia. The platform allows users to browse movies, view details and trailers, book tickets for upcoming screenings, and leave reviews. It features user authentication, server-side rendering, SEO-friendly metadata, and a dynamic API structure.",
     image: "/images/seats.png",
     tag: ["All", "Web"],
     gitUrl: "https://github.com/EmpyreanMist/fullstack-kino",
@@ -66,11 +66,11 @@ const ProjectsSection = () => {
   };
 
   return (
-    <section id="projects">
-      <h2 className="text-center text-4xl font-bold text-white mt-4 mb-8 md:mb-12">
+    <section id="projects" className="px-4 xl:px-16 py-16">
+      <h2 className="text-center text-4xl font-bold text-gray-900 dark:text-white mt-4 mb-8 md:mb-12">
         My Projects
       </h2>
-      <div className="text-white flex flex-row justify-center items-center gap-2 py-6">
+      <div className="text-gray-900 dark:text-white flex flex-row justify-center items-center gap-2 py-6">
         <ProjectTag
           onClick={handleTagChange}
           name="All"

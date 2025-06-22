@@ -41,3 +41,8 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: 250px;
 }
+
+html,
+body {
+  @apply bg-[#F8FAFC] text-gray-900 dark:bg-black dark:text-white transition-colors duration-300;
+}

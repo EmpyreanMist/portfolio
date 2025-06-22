@@ -40,30 +40,32 @@ const HeroSection = ({ onDownloadCV }) => {
           transition={{ duration: 0.5 }}
           className="col-span-8 place-self-center text-center sm:text-left justify-self-start"
         >
-          <h1 className="text-white mb-4 text-4xl sm:text-5xl lg:text-8xl lg:leading-normal font-extrabold">
+          <h1 className="mb-4 text-4xl sm:text-5xl lg:text-8xl lg:leading-normal font-extrabold">
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600">
               Hello, I&apos;m{" "}
             </span>
             <br />
-            <TypeAnimation
-              sequence={[
-                "Christian",
-                1000,
-                "Fullstack developer",
-                1000,
-                "Web enthusiast",
-                1000,
-                "Tech Lover",
-                1000,
-                "Problem solver",
-                1000,
-              ]}
-              wrapper="span"
-              speed={50}
-              repeat={Infinity}
-            />
+            <span className="text-black dark:text-white">
+              <TypeAnimation
+                sequence={[
+                  "Christian",
+                  1000,
+                  "Fullstack developer",
+                  1000,
+                  "Web enthusiast",
+                  1000,
+                  "Tech Lover",
+                  1000,
+                  "Problem solver",
+                  1000,
+                ]}
+                wrapper="span"
+                speed={50}
+                repeat={Infinity}
+              />
+            </span>
           </h1>
-          <p className="text-white text-base sm:text-lg mb-6 lg:text-xl">
+          <p className="text-black dark:text-white text-base sm:text-lg mb-6 lg:text-xl">
             I break things just to see how they work. Don’t worry, I fix them
             too.
           </p>

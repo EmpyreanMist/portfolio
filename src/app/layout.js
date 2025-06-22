@@ -34,11 +34,32 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/main-logo.png" type="image/png" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function () {
+                try {
+                  const theme = localStorage.getItem("theme");
+                  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+                  if (theme === "dark" || (!theme && prefersDark)) {
+                    document.documentElement.classList.add("dark");
+                  } else {
+                    document.documentElement.classList.remove("dark");
+                  }
+                } catch (_) {}
+              })();
+            `,
+          }}
+        />
       </head>
-      <body className={inter.className}>{children}</body>
+      <body
+        className={`${inter.className} bg-white text-black dark:bg-black dark:text-white transition-colors duration-300`}
+      >
+        {children}
+      </body>
     </html>
   );
 }
