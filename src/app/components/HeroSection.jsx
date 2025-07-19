@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { TypeAnimation } from "react-type-animation";
 import { motion } from "framer-motion";
@@ -8,6 +8,10 @@ const HeroSection = ({ onDownloadCV }) => {
   const [currentImage, setCurrentImage] = useState("/images/christian.jpg");
   const [rotation, setRotation] = useState(0);
 
+  const typeRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  // Bildrotation
   useEffect(() => {
     const timer = setTimeout(() => {
       setRotation(360);
@@ -17,6 +21,27 @@ const HeroSection = ({ onDownloadCV }) => {
     }, 2000);
 
     return () => clearTimeout(timer);
+  }, []);
+
+  // Typ-animation synlighet
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0.5 }
+    );
+
+    if (typeRef.current) {
+      observer.observe(typeRef.current);
+    }
+
+    return () => {
+      if (typeRef.current) {
+        observer.unobserve(typeRef.current);
+      }
+    };
   }, []);
 
   const handleDownload = () => {
@@ -45,24 +70,26 @@ const HeroSection = ({ onDownloadCV }) => {
               Hello, I&apos;m{" "}
             </span>
             <br />
-            <span className="text-black dark:text-white">
-              <TypeAnimation
-                sequence={[
-                  "Christian",
-                  1000,
-                  "Fullstack developer",
-                  1000,
-                  "Web enthusiast",
-                  1000,
-                  "Tech Lover",
-                  1000,
-                  "Problem solver",
-                  1000,
-                ]}
-                wrapper="span"
-                speed={50}
-                repeat={Infinity}
-              />
+            <span className="text-black dark:text-white" ref={typeRef}>
+              {isVisible && (
+                <TypeAnimation
+                  sequence={[
+                    "Christian",
+                    1000,
+                    "Fullstack developer",
+                    1000,
+                    "Web enthusiast",
+                    1000,
+                    "Tech Lover",
+                    1000,
+                    "Problem solver",
+                    1000,
+                  ]}
+                  wrapper="span"
+                  speed={50}
+                  repeat={Infinity}
+                />
+              )}
             </span>
           </h1>
           <p className="text-black dark:text-white text-base sm:text-lg mb-6 lg:text-xl">

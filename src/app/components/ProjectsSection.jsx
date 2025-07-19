@@ -45,6 +45,16 @@ const projectsData = [
     gitUrl: "https://github.com/EmpyreanMist/fullstack-kino",
     previewUrl: "https://fullstack-kino.vercel.app/",
   },
+  {
+    id: 5,
+    title: "BRT Höjd",
+    description:
+      "This is my first real client project: a modern, responsive website built for BRT Höjd AB, a company specializing in industrial climbing and height-related services. The site is built with Next.js and React-Bootstrap, and is primarily optimized for mobile devices to reflect the client's needs in the field. It features a clean design, image carousel, and dynamic content sections tailored to the brand.",
+    image: "/images/projects/brt.png",
+    tag: ["All", "Web"],
+    gitUrl: "https://github.com/EmpyreanMist/brt-hojd-ab",
+    previewUrl: "https://www.brthojd.se/",
+  },
 ];
 
 const ProjectsSection = () => {

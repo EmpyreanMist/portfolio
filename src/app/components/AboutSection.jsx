@@ -51,6 +51,28 @@ const TAB_DATA = [
       </ul>
     ),
   },
+  {
+    title: "Currently learning",
+    id: "learning",
+    content: (
+      <ul className="list-disc pl-4 space-y-2">
+        <li>
+          <Link
+            href="https://www.udemy.com/course/java-the-complete-java-developer-course/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[17px] font-medium text-gray-900 dark:text-gray-100 underline underline-offset-2 hover:text-blue-600 dark:hover:text-blue-400 transition-all"
+          >
+            The Complete Java Developer Course | Udemy
+          </Link>
+          <p className="text-gray-700 dark:text-gray-300 text-sm mt-1">
+            Currently learning object-oriented programming, data structures, and
+            Java fundamentals through hands-on projects and coding challenges.
+          </p>
+        </li>
+      </ul>
+    ),
+  },
 ];
 
 const AboutSection = () => {
@@ -121,6 +143,12 @@ const AboutSection = () => {
               active={tab === "certifications"}
             >
               Certifications
+            </TabButton>
+            <TabButton
+              selectTab={() => handleTabChange("learning")}
+              active={tab === "learning"}
+            >
+              Currently learning
             </TabButton>
           </div>
 
