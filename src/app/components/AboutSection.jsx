@@ -90,12 +90,7 @@ const AboutSection = () => {
       className="relative bg-[#F8FAFC] dark:bg-black text-black dark:text-white py-12 px-4 overflow-hidden"
       id="about"
     >
-      <div
-        className="absolute inset-0 
-                   bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] 
-                   from-blue-400/30 via-blue-500/20 to-transparent 
-                   blur-3xl z-0 pointer-events-none"
-      ></div>
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-400/30 via-blue-500/20 to-transparent blur-3xl z-0 pointer-events-none" />
 
       <div className="relative z-10 max-w-6xl mx-auto md:grid md:grid-cols-2 gap-8 items-center">
         <div className="flex justify-center md:justify-start items-center mt-10 md:mt-0">
@@ -111,12 +106,7 @@ const AboutSection = () => {
           </div>
         </div>
 
-        <div
-          className="mt-4 md:mt-0 text-left flex flex-col h-full
-                     bg-white/60 dark:bg-black
-                     backdrop-blur-xl border border-gray-200 dark:border-white/10
-                     shadow-md rounded-xl p-6"
-        >
+        <div className="mt-4 md:mt-0 text-left flex flex-col h-full bg-white/60 dark:bg-black backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-md rounded-xl p-6">
           <h2 className="text-4xl font-bold mb-4 text-gray-900 dark:text-white">
             About Me
           </h2>
@@ -130,26 +120,33 @@ const AboutSection = () => {
             solution.
           </p>
 
-          {/* Tab Buttons */}
-          <div className="flex flex-row justify-start mt-8 gap-4">
-            <TabButton
-              selectTab={() => handleTabChange("education")}
-              active={tab === "education"}
-            >
-              Education
-            </TabButton>
-            <TabButton
-              selectTab={() => handleTabChange("certifications")}
-              active={tab === "certifications"}
-            >
-              Certifications
-            </TabButton>
-            <TabButton
-              selectTab={() => handleTabChange("learning")}
-              active={tab === "learning"}
-            >
-              Currently learning
-            </TabButton>
+          {/* Mobile hint */}
+          <p className="text-sm text-gray-400 mt-4 md:hidden">Swipe tabs →</p>
+
+          {/* Tab Buttons – scrollable, snap, fade */}
+          <div className="relative mt-4">
+            <div className="flex flex-row gap-4 overflow-x-auto whitespace-nowrap scrollbar-hide snap-x snap-mandatory pr-6">
+              <TabButton
+                selectTab={() => handleTabChange("education")}
+                active={tab === "education"}
+              >
+                Education
+              </TabButton>
+              <TabButton
+                selectTab={() => handleTabChange("certifications")}
+                active={tab === "certifications"}
+              >
+                Certifications
+              </TabButton>
+              <TabButton
+                selectTab={() => handleTabChange("learning")}
+                active={tab === "learning"}
+              >
+                Currently learning
+              </TabButton>
+            </div>
+            {/* Right fade effect */}
+            <div className="absolute top-0 right-0 h-full w-8 bg-gradient-to-l from-white dark:from-black to-transparent pointer-events-none" />
           </div>
 
           <div className="mt-8">

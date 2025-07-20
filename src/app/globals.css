@@ -46,3 +46,11 @@ html,
 body {
   @apply bg-[#F8FAFC] text-gray-900 dark:bg-black dark:text-white transition-colors duration-300;
 }
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

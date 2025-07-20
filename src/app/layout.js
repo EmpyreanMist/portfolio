@@ -7,6 +7,7 @@ export const metadata = {
   title: "Christian's Portfolio",
   description:
     "Showcasing fullstack projects, creative frontend builds, and a passion for clean code.",
+  metadataBase: new URL("https://christians-portfolio.vercel.app"),
   openGraph: {
     title: "Christian's Portfolio",
     description:
