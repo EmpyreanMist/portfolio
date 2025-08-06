@@ -1,5 +1,6 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
+import CookieBanner from "./components/CookieBanner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -38,6 +39,8 @@ export default function RootLayout({ children }) {
     <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/main-logo.png" type="image/png" />
+
+        {/*  Dark mode script */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -55,11 +58,29 @@ export default function RootLayout({ children }) {
             `,
           }}
         />
+
+        {/*  Google Analytics */}
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=G-SFCC2X5GY0"
+        ></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-SFCC2X5GY0');
+            `,
+          }}
+        />
       </head>
+
       <body
         className={`${inter.className} bg-white text-black dark:bg-black dark:text-white transition-colors duration-300`}
       >
         {children}
+        <CookieBanner />
       </body>
     </html>
   );
