@@ -23,7 +23,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
         <Link href="/" className="z-50 flex items-center gap-2">
           <Image
-            src="/main-logo.png"
+            src="/images/main-logo.png"
             alt="Christian Logo"
             width={40}
             height={40}

@@ -125,6 +125,7 @@ const HeroSection = ({ onDownloadCV }) => {
               className="w-full h-full object-cover"
               width={350}
               height={350}
+              priority
             />
           </motion.div>
         </motion.div>

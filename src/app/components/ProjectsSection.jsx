@@ -40,7 +40,7 @@ const projectsData = [
     title: "Kino",
     description:
       "Kino is a fullstack cinema website built with Next.js, MongoDB, and Supabase as part of a team project during my studies at Lernia. The platform allows users to browse movies, view details and trailers, book tickets for upcoming screenings, and leave reviews. It features user authentication, server-side rendering, SEO-friendly metadata, and a dynamic API structure.",
-    image: "/images/seats.png",
+    image: "/images/projects/seats.png",
     tag: ["All", "Web"],
     gitUrl: "https://github.com/EmpyreanMist/fullstack-kino",
     previewUrl: "https://fullstack-kino.vercel.app/",
