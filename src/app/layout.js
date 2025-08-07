@@ -5,31 +5,54 @@ import CookieBanner from "./components/CookieBanner";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Christian's Portfolio",
+  title: "Christian Fryksten | Fullstack Developer Portfolio",
   description:
-    "Showcasing fullstack projects, creative frontend builds, and a passion for clean code.",
-  metadataBase: new URL("https://christians-portfolio.vercel.app"),
+    "Explore Christian's portfolio with projects built using React, Next.js, MongoDB, Node.js and more.",
+  metadataBase: new URL("https://fryksten.dev"),
+  keywords: [
+    "Christian Fryksten",
+    "fullstack developer",
+    "React developer",
+    "Next.js portfolio",
+    "JavaScript developer",
+    "web development",
+    "MongoDB",
+    "Node.js",
+    "frontend",
+    "backend",
+  ],
+  authors: [
+    {
+      name: "Christian Fryksten",
+      url: "https://fryksten.dev",
+    },
+  ],
+  creator: "Christian Fryksten",
+  publisher: "Christian Fryksten",
+  alternates: {
+    canonical: "https://fryksten.dev/",
+  },
   openGraph: {
-    title: "Christian's Portfolio",
+    title: "Christian Fryksten | Fullstack Developer",
     description:
-      "Explore Christian's developer portfolio — React, Next.js, MongoDB, and more.",
-    url: "https://christians-portfolio.vercel.app/",
+      "Showcasing fullstack development projects using modern web technologies like React, Next.js, and Node.js.",
+    url: "https://fryksten.dev/",
     siteName: "Christian Fryksten",
+    type: "website",
     images: [
       {
         url: "/images/link-picture.png",
         width: 1200,
         height: 630,
-        alt: "Christian's Portfolio Logo",
+        alt: "Christian Fryksten Portfolio Preview",
       },
     ],
-    type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Christian's Portfolio",
+    title: "Christian Fryksten | Portfolio",
     description:
-      "Explore Christian's fullstack development work, projects, and design experiments.",
+      "See projects and skills in fullstack development, clean UI, and modern web technologies.",
     images: ["/images/link-picture.png"],
   },
 };
@@ -38,9 +61,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/images/main-logo.png" type="image/png" />
+        <link rel="icon" href="/images/main-logo-copy.png" type="image/png" />
+        <meta name="theme-color" content="#121212" />
+        <meta name="robots" content="index, follow" />
 
-        {/*  Dark mode script */}
+        {/* Dark mode script */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -59,7 +84,7 @@ export default function RootLayout({ children }) {
           }}
         />
 
-        {/*  Google Analytics */}
+        {/* Google Analytics */}
         <script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-SFCC2X5GY0"
