@@ -61,7 +61,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/images/main-logo-copy.png" type="image/png" />
+        <link rel="icon" href="/favicon1.ico" type="image/ico" />
         <meta name="theme-color" content="#121212" />
         <meta name="robots" content="index, follow" />
 
