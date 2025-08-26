@@ -55,6 +55,16 @@ const projectsData = [
     gitUrl: "https://github.com/EmpyreanMist/brt-hojd-ab",
     previewUrl: "https://www.brthojd.se/",
   },
+  {
+    id: 6,
+    title: "Java CLI",
+    description:
+      "Electricity Price CLI (Java) – A command-line tool that fetches hourly electricity prices from the Elpris API, calculates daily averages, identifies cheapest/most expensive hours, and finds optimal charging windows (2/4/8 h) using a sliding-window algorithm.",
+    image: "/images/projects/cli.png",
+    tag: ["All", "Java"],
+    gitUrl: "https://github.com/EmpyreanMist/electricity-price-cli",
+    previewUrl: "nada",
+  },
 ];
 
 const ProjectsSection = () => {
@@ -83,18 +93,18 @@ const ProjectsSection = () => {
       <div className="text-gray-900 dark:text-white flex flex-row justify-center items-center gap-2 py-6">
         <ProjectTag
           onClick={handleTagChange}
-          name="All"
-          isSelected={tag === "All"}
-        />
-        <ProjectTag
-          onClick={handleTagChange}
           name="Web"
           isSelected={tag === "Web"}
         />
         <ProjectTag
           onClick={handleTagChange}
-          name="Other"
-          isSelected={tag === "Other"}
+          name="Java"
+          isSelected={tag === "Java"}
+        />
+        <ProjectTag
+          onClick={handleTagChange}
+          name="All"
+          isSelected={tag === "All"}
         />
       </div>
       <ul ref={ref} className="grid md:grid-cols-3 gap-8 md:gap-12">
