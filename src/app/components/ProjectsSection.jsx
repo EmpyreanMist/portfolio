@@ -73,6 +73,16 @@ const projectsData = [
     tag: ["All", "Java"],
     gitUrl: "https://github.com/fungover/exercise2025/pull/41",
   },
+  {
+    id: 8,
+    title: "Kylkonsulten i Norr AB",
+    description:
+      "A modern, responsive website built with Next.js for Kylkonsulten i Norr AB, a company specializing in refrigeration examinations and preparatory courses. The site highlights their core mission of conducting practical and theoretical certification exams on behalf of Incert, while also promoting their preparatory training programs. It features a clear contact form for booking requests and a clean design inspired by industry-leading training websites.",
+    image: "/images/projects/kylkonsulten.png",
+    tag: ["All", "Web"],
+    gitUrl: "https://github.com/EmpyreanMist/kylkonsulten",
+    previewUrl: "https://kylkonsulten.vercel.app/",
+  },
 ];
 
 const ProjectsSection = () => {
