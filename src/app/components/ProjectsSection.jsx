@@ -63,7 +63,15 @@ const projectsData = [
     image: "/images/projects/cli.png",
     tag: ["All", "Java"],
     gitUrl: "https://github.com/EmpyreanMist/electricity-price-cli",
-    previewUrl: "nada",
+  },
+  {
+    id: 7,
+    title: "Dungeon Crawler CLI",
+    description:
+      "A text-based dungeon crawler game built in Java as part of a school project. The player explores procedurally generated dungeons, battles enemies, and manages health and items through command-line interactions. This project was submitted as a pull request to the school’s base repository and showcases object-oriented programming, combat systems, and unit testing in Java.",
+    image: "/images/projects/dungeon-crawler.png",
+    tag: ["All", "Java"],
+    gitUrl: "https://github.com/fungover/exercise2025/pull/41",
   },
 ];
 
