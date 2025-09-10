@@ -23,8 +23,9 @@ export default function TechStackSection() {
       "EJS",
       "Next.js",
       "TypeScript",
+      "Java",
     ],
-    Testing: ["Cypress", "Jest"],
+    Testing: ["Cypress", "Jest", "JUnit"],
     DevOps: ["Git", "GitHub", "NPM", "GitHub Actions", "Docker"],
     Deployment: ["Vercel", "Railway", "Render"],
   };
