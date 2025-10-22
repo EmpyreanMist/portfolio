@@ -33,14 +33,11 @@ const HeroSection = ({ onDownloadCV }) => {
       { threshold: 0.5 }
     );
 
-    if (typeRef.current) {
-      observer.observe(typeRef.current);
-    }
+    const element = typeRef.current;
+    if (element) observer.observe(element);
 
     return () => {
-      if (typeRef.current) {
-        observer.unobserve(typeRef.current);
-      }
+      if (element) observer.unobserve(element);
     };
   }, []);
 

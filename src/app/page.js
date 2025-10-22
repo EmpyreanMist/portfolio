@@ -7,6 +7,7 @@ import ProjectsSection from "./components/ProjectsSection";
 import EmailSection from "./components/EmailSection";
 import Footer from "./components/Footer";
 import TechStackSection from "./components/TechStackSection";
+import WorkExperience from "./components/WorkExperience";
 
 export default function Home() {
   const [laserLines, setLaserLines] = useState([]);
@@ -111,6 +112,7 @@ export default function Home() {
         <HeroSection onDownloadCV={triggerLasers} />
         <AboutSection />
         <TechStackSection />
+        <WorkExperience />
         <ProjectsSection />
         <EmailSection onSendEmail={triggerLasers} />
       </div>

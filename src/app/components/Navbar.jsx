@@ -10,6 +10,7 @@ import useTheme from "../hooks/useTheme";
 const navLinks = [
   { title: "About", path: "#about" },
   { title: "TechStack", path: "#techstack" },
+  { title: "Experience", path: "#experience" },
   { title: "Projects", path: "#projects" },
   { title: "Contact", path: "#contact" },
 ];
