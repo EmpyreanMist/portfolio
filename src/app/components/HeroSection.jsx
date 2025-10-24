@@ -11,7 +11,6 @@ const HeroSection = ({ onDownloadCV }) => {
   const typeRef = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
 
-  // Bildrotation
   useEffect(() => {
     const timer = setTimeout(() => {
       setRotation(360);
@@ -23,7 +22,6 @@ const HeroSection = ({ onDownloadCV }) => {
     return () => clearTimeout(timer);
   }, []);
 
-  // Typ-animation synlighet
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {

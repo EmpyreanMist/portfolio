@@ -63,6 +63,15 @@ const projectsData = [
     tag: ["All", "Java"],
     gitUrl: "https://github.com/fungover/exercise2025/pull/41",
   },
+  {
+    id: 8,
+    title: "Fishing Diary",
+    description:
+      "A mobile app built with React Native and Expo for logging catches, tracking species, and visualizing fishing spots. Uses Supabase for backend and Gluestack UI for styling.",
+    image: "/images/projects/fishing-diary.png",
+    tag: ["All", "App"],
+    gitUrl: "https://github.com/EmpyreanMist/Fishing-Diary",
+  },
 ];
 
 const AnimatedProjectCard = ({ project, index }) => {
@@ -116,6 +125,11 @@ const ProjectsSection = () => {
           onClick={handleTagChange}
           name="Web"
           isSelected={tag === "Web"}
+        />
+        <ProjectTag
+          onClick={handleTagChange}
+          name="App"
+          isSelected={tag === "App"}
         />
         <ProjectTag
           onClick={handleTagChange}
