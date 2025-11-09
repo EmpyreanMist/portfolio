@@ -48,6 +48,16 @@ const TAB_DATA = [
             Responsive Web Design | freeCodeCamp
           </Link>
         </li>
+        <li>
+          <Link
+            href="/images/spring-boot-fundamentals.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[17px] font-medium text-gray-900 dark:text-gray-100 underline underline-offset-2 hover:text-blue-600 dark:hover:text-blue-400 transition-all"
+          >
+            Spring Boot: Mastering the Fundamentals | Code with Mosh
+          </Link>
+        </li>
       </ul>
     ),
   },
