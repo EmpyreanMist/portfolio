@@ -40,7 +40,7 @@ const TAB_DATA = [
         </li>
         <li>
           <Link
-            href="https://www.freecodecamp.org/certification/ChristianFryksten/responsive-web-design"
+            href="https://www.freecodecamp.org/certification/christianfryksten/responsive-web-design"
             target="_blank"
             rel="noopener noreferrer"
             className="text-[17px] font-medium text-gray-900 dark:text-gray-100 underline underline-offset-2 hover:text-blue-600 dark:hover:text-blue-400 transition-all"
