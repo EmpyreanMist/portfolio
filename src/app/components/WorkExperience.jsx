@@ -27,7 +27,18 @@ const experiencesData = [
     tag: ["All", "Web"],
     image: "/images/projects/kylkonsulten.png",
     gitUrl: "https://github.com/EmpyreanMist/kylkonsulten",
-    previewUrl: "https://kylkonsulten.vercel.app/",
+    previewUrl: "https://www.kylkonsulten.se/",
+  },
+  {
+    id: 3,
+    title: "Akutduon",
+    company: "Freelance Client Work",
+    description:
+      "Built and launched a landing page for a CPR education company.",
+    date: "October 2025",
+    tag: ["All", "Web"],
+    image: "/images/projects/akut-duon.png",
+    previewUrl: "https://akutduon.se/",
   },
 ];
 
