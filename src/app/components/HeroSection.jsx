@@ -43,8 +43,8 @@ const HeroSection = ({ onDownloadCV }) => {
     onDownloadCV?.();
     setTimeout(() => {
       const link = document.createElement("a");
-      link.href = "/cv-christian-fryksten.pdf";
-      link.download = "Christian-Fryksten-CV.pdf";
+      link.href = "/ChristianFrykstenCV.pdf";
+      link.download = "ChristianFrykstenCV";
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
