@@ -35,7 +35,7 @@ const experiencesData = [
     company: "Freelance Client Work",
     description:
       "Built and launched a landing page for a CPR education company.",
-    date: "October 2025",
+    date: "November 2025",
     tag: ["All", "Web"],
     image: "/images/projects/akut-duon.png",
     previewUrl: "https://akutduon.se/",
