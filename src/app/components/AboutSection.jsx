@@ -123,17 +123,15 @@ const AboutSection = () => {
           <p className="text-gray-700 dark:text-gray-300 text-base lg:text-lg">
             I’m Christian, a curious developer who likes building things that
             actually work. I’ve tinkered with everything from Wordle clones to
-            fullstack apps, and I enjoy when tech feels real — when the code I
+            fullstack apps, and I enjoy when tech feels real, when the code I
             write turns into something you can click, test, and maybe even smile
             at. I like digging into problems, learning new tricks along the way,
             and I’m not afraid to get lost in the code until I find the
             solution.
           </p>
 
-          {/* Mobile hint */}
           <p className="text-sm text-gray-400 mt-4 md:hidden">Swipe tabs →</p>
 
-          {/* Tab Buttons – scrollable, snap, fade */}
           <div className="relative mt-4">
             <div className="flex flex-row gap-4 overflow-x-auto whitespace-nowrap scrollbar-hide snap-x snap-mandatory pr-6">
               <TabButton
@@ -155,7 +153,6 @@ const AboutSection = () => {
                 Currently learning
               </TabButton>
             </div>
-            {/* Right fade effect */}
             <div className="absolute top-0 right-0 h-full w-8 bg-gradient-to-l from-white dark:from-black to-transparent pointer-events-none" />
           </div>
 

@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { TypeAnimation } from "react-type-animation";
 import { motion } from "framer-motion";
+import CvMenu from "./CvMenu";
 
 const HeroSection = ({ onDownloadCV }) => {
   const [currentImage, setCurrentImage] = useState("/images/christian.jpg");
@@ -66,40 +67,32 @@ const HeroSection = ({ onDownloadCV }) => {
             </span>
             <br />
             <span className="text-black dark:text-white" ref={typeRef}>
-              {isVisible && (
-                <TypeAnimation
-                  sequence={[
-                    "Christian",
-                    1000,
-                    "Fullstack developer",
-                    1000,
-                    "Web enthusiast",
-                    1000,
-                    "Tech Lover",
-                    1000,
-                    "Problem solver",
-                    1000,
-                  ]}
-                  wrapper="span"
-                  speed={50}
-                  repeat={Infinity}
-                />
-              )}
+              <TypeAnimation
+                sequence={[
+                  "Christian",
+                  1000,
+                  "Fullstack dev",
+                  1000,
+                  "Web enthusiast",
+                  1000,
+                  "Tech Lover",
+                  1000,
+                  "Problem solver",
+                  1000,
+                  "Christian",
+                ]}
+                wrapper="span"
+                speed={50}
+                repeat={false}
+              />
             </span>
           </h1>
           <p className="text-black dark:text-white text-base sm:text-lg mb-6 lg:text-xl">
             I break things just to see how they work. Don’t worry, I fix them
             too.
           </p>
-          <div>
-            <button
-              onClick={handleDownload}
-              className="px-1 inline-block py-1 w-full sm:w-fit rounded-full bg-gradient-to-r from-blue-600 via-sky-500 to-indigo-600 hover:brightness-110 transition-all text-white mt-3"
-            >
-              <span className="block bg-[#0f172a] hover:bg-[#1e293b] rounded-full px-5 py-2 text-white font-semibold shadow-md transition-colors duration-200">
-                Download CV
-              </span>
-            </button>
+          <div className="mt-3">
+            <CvMenu />
           </div>
         </motion.div>
         <motion.div

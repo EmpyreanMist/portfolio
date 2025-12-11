@@ -12,6 +12,7 @@ export const metadata = {
   metadataBase: new URL("https://fryksten.dev"),
   keywords: [
     "Christian Fryksten",
+    "Fryksten",
     "fullstack developer",
     "React developer",
     "Next.js portfolio",
