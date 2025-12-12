@@ -31,12 +31,12 @@ export default function CvMenu() {
   const menuItems = [
     {
       label: "Preview (Swedish)",
-      url: "/cv/ChristianFryksten_SV.pdf",
+      url: "/ChristianFrykstenCV-SWE.pdf",
       preview: true,
     },
     {
       label: "Preview (English)",
-      url: "/cv/ChristianFryksten_EN.pdf",
+      url: "/ChristianFrykstenCV-ENG.pdf",
       preview: true,
     },
     {
