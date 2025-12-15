@@ -1,11 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
 import HeroSection from "./components/HeroSection";
-import Navbar from "./components/Navbar";
 import AboutSection from "./components/AboutSection";
 import ProjectsSection from "./components/ProjectsSection";
 import EmailSection from "./components/EmailSection";
-import Footer from "./components/Footer";
 import TechStackSection from "./components/TechStackSection";
 import WorkExperience from "./components/WorkExperience";
 
@@ -106,8 +104,6 @@ export default function Home() {
         </div>
       )}
 
-      {/* Innehåll */}
-      <Navbar />
       <div className="container relative z-20 mt-24 mx-auto px-12 py-4">
         <HeroSection onDownloadCV={triggerLasers} />
         <AboutSection />
@@ -116,7 +112,6 @@ export default function Home() {
         <ProjectsSection />
         <EmailSection onSendEmail={triggerLasers} />
       </div>
-      <Footer />
     </main>
   );
 }

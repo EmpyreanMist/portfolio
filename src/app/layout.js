@@ -2,6 +2,8 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import Script from "next/script";
 import CookieBanner from "./components/CookieBanner";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -75,12 +77,12 @@ export default function RootLayout({ children }) {
                 const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
                 if (theme === "dark" || (!theme && prefersDark)) {
                   document.documentElement.classList.add("dark");
-                } else {
-                  document.documentElement.classList.remove("dark");
+                  } else {
+                    document.documentElement.classList.remove("dark");
                 }
-              } catch (_) {}
-            })();
-          `}
+                } catch (_) {}
+                })();
+                `}
         </Script>
 
         <Script
@@ -93,15 +95,17 @@ export default function RootLayout({ children }) {
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', 'G-SFCC2X5GY0');
-          `}
+            `}
         </Script>
       </head>
 
       <body
         className={`${inter.className} bg-white text-black dark:bg-black dark:text-white transition-colors duration-300`}
       >
+        <Navbar />
         {children}
         <CookieBanner />
+        <Footer />
       </body>
     </html>
   );

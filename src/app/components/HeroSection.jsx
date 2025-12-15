@@ -91,8 +91,15 @@ const HeroSection = ({ onDownloadCV }) => {
             I break things just to see how they work. Don’t worry, I fix them
             too.
           </p>
-          <div className="mt-3">
+          <div className="mt-6 flex flex-col sm:flex-row gap-4 items-center sm:items-start">
             <CvMenu />
+            <a
+              href="/labs"
+              className="inline-flex items-center justify-center rounded-full border border-blue-500 px-6 py-3 text-sm font-medium
+             text-blue-500 hover:bg-blue-500 hover:text-white transition-colors"
+            >
+              Labs
+            </a>
           </div>
         </motion.div>
         <motion.div
