@@ -9,11 +9,11 @@ import useTheme from "../hooks/useTheme";
 import { SunIcon, MoonIcon } from "@heroicons/react/24/outline";
 
 const navLinks = [
-  { title: "About", path: "#about" },
-  { title: "TechStack", path: "#techstack" },
-  { title: "Experience", path: "#experience" },
-  { title: "Projects", path: "#projects" },
-  { title: "Contact", path: "#contact" },
+  { title: "About", path: "/#about" },
+  { title: "TechStack", path: "/#techstack" },
+  { title: "Experience", path: "/#experience" },
+  { title: "Projects", path: "/#projects" },
+  { title: "Contact", path: "/#contact" },
 ];
 
 const Navbar = () => {
