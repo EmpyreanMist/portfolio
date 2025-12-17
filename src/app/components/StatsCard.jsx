@@ -1,6 +1,5 @@
 export default function StatsCard({ title, data, mode }) {
   function formatLabel(label) {
-    // plocka endast siffror
     const value = label.match(/\d+/)?.[0];
 
     if (!value) return label;
@@ -40,17 +39,14 @@ export default function StatsCard({ title, data, mode }) {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
         {data.map((item) => (
           <div key={item.label}>
-            {/* WPM */}
             <div className="text-3xl font-semibold text-blue-700 dark:text-blue-400 tabular-nums">
               {item.wpm}
             </div>
 
-            {/* Label */}
             <div className="text-xs text-gray-700 dark:text-gray-500">
               {formatLabel(item.label)}
             </div>
 
-            {/* Accuracy */}
             <div className="text-xs text-gray-600 dark:text-gray-500">
               {item.acc}% accuracy
             </div>
