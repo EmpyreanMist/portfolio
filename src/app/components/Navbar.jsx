@@ -6,6 +6,7 @@ import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import MenuOverlay from "./MenuOverlay";
 import Image from "next/image";
 import useTheme from "../hooks/useTheme";
+import { SunIcon, MoonIcon } from "@heroicons/react/24/outline";
 
 const navLinks = [
   { title: "About", path: "#about" },
@@ -36,21 +37,22 @@ const Navbar = () => {
         </Link>
 
         <div className="flex items-center space-x-2 ml-4">
-          <span className="text-gray-800 dark:text-white text-sm">
-            Darkmode
-          </span>
           <button
             onClick={toggleTheme}
-            className={`w-12 h-6 flex items-center rounded-full p-1 transition-colors duration-300 ${
-              theme === "dark" ? "bg-blue-600" : "bg-gray-300"
-            }`}
-            aria-label="Toggle dark mode"
+            aria-label="Toggle theme"
+            className="
+    flex items-center justify-center
+    w-10 h-10 rounded-full
+    bg-gray-100 hover:bg-gray-200
+    dark:bg-white/10 dark:hover:bg-white/20
+    transition-colors
+  "
           >
-            <div
-              className={`w-4 h-4 bg-white rounded-full shadow-md transform transition-transform duration-300 ${
-                theme === "dark" ? "translate-x-6" : "translate-x-1"
-              }`}
-            />
+            {theme === "dark" ? (
+              <MoonIcon className="h-5 w-5 text-blue-400" />
+            ) : (
+              <SunIcon className="h-5 w-5 text-yellow-500" />
+            )}
           </button>
         </div>
 
