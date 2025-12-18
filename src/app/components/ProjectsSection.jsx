@@ -13,7 +13,6 @@ const projectsData = [
     image: "/images/projects/wordle.png",
     tag: ["All", "Web"],
     gitUrl: "https://github.com/EmpyreanMist/retro-wordle?tab=readme-ov-file",
-    previewUrl: "https://retro-wordle.up.railway.app/",
   },
   {
     id: 2,
@@ -71,6 +70,16 @@ const projectsData = [
     image: "/images/projects/fishing-diary.png",
     tag: ["All", "App"],
     gitUrl: "https://github.com/EmpyreanMist/Fishing-Diary",
+  },
+  {
+    id: 9,
+    title: "Zipp – Location Reporting System",
+    description:
+      "A team-based, production-inspired platform where users report and explore locations on an interactive map. Built with a secure, event-driven backend. My work focused on identity, authorization, and passwordless authentication using OAuth2 and WebAuthn (passkeys).",
+    image: "/images/projects/zipp.png",
+    tag: ["All", "Web", "Java"],
+    gitUrl: "https://github.com/fungover/zipp",
+    previewUrl: "https://zipp.city",
   },
 ];
 
