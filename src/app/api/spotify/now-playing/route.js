@@ -4,6 +4,9 @@ const TOKEN_ENDPOINT = "https://accounts.spotify.com/api/token";
 const NOW_PLAYING_ENDPOINT =
   "https://api.spotify.com/v1/me/player/currently-playing";
 
+let lastPlayedTrack = null;
+let lastPlayedAt = null;
+
 async function getAccessToken() {
   const clientId = process.env.SPOTIFY_CLIENT_ID;
   const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
@@ -29,8 +32,7 @@ async function getAccessToken() {
   });
 
   if (!res.ok) {
-    const text = await res.text();
-    throw new Error(`Spotify token error: ${text}`);
+    throw new Error("Failed to refresh Spotify token");
   }
 
   const data = await res.json();
@@ -48,33 +50,46 @@ export async function GET() {
       cache: "no-store",
     });
 
-    if (res.status === 204) {
-      return NextResponse.json({ isPlaying: false });
-    }
-
-    if (!res.ok) {
-      return NextResponse.json({ isPlaying: false });
+    if (res.status === 204 || !res.ok) {
+      return NextResponse.json({
+        isPlaying: false,
+        track: lastPlayedTrack,
+        lastPlayedAt,
+      });
     }
 
     const data = await res.json();
     const item = data?.item;
 
     if (!item) {
-      return NextResponse.json({ isPlaying: false });
+      return NextResponse.json({
+        isPlaying: false,
+        track: lastPlayedTrack,
+        lastPlayedAt,
+      });
     }
 
-    return NextResponse.json({
-      isPlaying: data.is_playing,
+    lastPlayedTrack = {
       title: item.name,
       artist: item.artists.map((a) => a.name).join(", "),
       album: item.album.name,
       image: item.album.images[0]?.url ?? null,
       url: item.external_urls.spotify,
+      isPlaying: data.is_playing,
+    };
+
+    lastPlayedAt = Date.now();
+
+    return NextResponse.json({
+      isPlaying: data.is_playing,
+      track: lastPlayedTrack,
+      lastPlayedAt,
     });
   } catch (err) {
     return NextResponse.json({
       isPlaying: false,
-      error: err.message,
+      track: lastPlayedTrack,
+      lastPlayedAt,
     });
   }
 }

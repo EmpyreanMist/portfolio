@@ -5,17 +5,17 @@ import Link from "next/link";
 import BlueLoader from "./BlueLoader";
 
 export default function SpotifyNowPlaying() {
-  const [track, setTrack] = useState(null);
+  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchTrack = async () => {
       try {
         const res = await fetch("/api/spotify/now-playing");
-        const data = await res.json();
-        setTrack(data ?? null);
+        const json = await res.json();
+        setData(json);
       } catch {
-        setTrack(null);
+        setData(null);
       } finally {
         setLoading(false);
       }
@@ -25,6 +25,8 @@ export default function SpotifyNowPlaying() {
     const interval = setInterval(fetchTrack, 15000);
     return () => clearInterval(interval);
   }, []);
+
+  const track = data?.track;
 
   return (
     <section className="mt-32 flex flex-col items-center text-center">
@@ -71,8 +73,8 @@ export default function SpotifyNowPlaying() {
               </p>
 
               <div className="mt-1 flex items-center gap-2 text-xs text-blue-600 dark:text-blue-400/90">
-                {track.isPlaying && <Equalizer />}
-                {track.isPlaying ? "Playing now" : "Last played"}
+                {data?.isPlaying && <Equalizer />}
+                {data?.isPlaying ? "Playing now" : "Last played"}
               </div>
             </div>
 
@@ -93,7 +95,7 @@ export default function SpotifyNowPlaying() {
           </div>
         ) : (
           <div className="h-[120px] flex items-center justify-center text-sm text-gray-400">
-            Not playing anything right now.
+            Not listening right now.
           </div>
         )}
       </div>
