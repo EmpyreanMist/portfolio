@@ -59,13 +59,11 @@ export default function MonkeytypeStats() {
         </div>
       ) : (
         <>
-          {/* Personal performance */}
           <div className="grid gap-6 md:grid-cols-2 w-full max-w-4xl">
             <StatsCard title="Time based" data={timeTests} mode="time" />
             <StatsCard title="Words based" data={wordTests} mode="words" />
           </div>
 
-          {/* Leaderboard */}
           {leaderboard15 && leaderboard60 && (
             <div className="mt-14 w-full max-w-4xl">
               <h3 className="text-xs uppercase tracking-widest mb-6 text-gray-500">

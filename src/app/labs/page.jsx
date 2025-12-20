@@ -1,4 +1,5 @@
 import MonkeytypeStats from "../components/MonkeyTypeStats";
+import SpotifyNowPlaying from "../components/SpotifyNowPlaying";
 export default function LabsPage() {
   return (
     <main
@@ -21,6 +22,7 @@ export default function LabsPage() {
       </div>
 
       <MonkeytypeStats />
+      <SpotifyNowPlaying />
     </main>
   );
 }

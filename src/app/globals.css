@@ -54,3 +54,27 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+.eq-bar {
+  width: 3px;
+  height: 10px;
+  background: currentColor;
+  animation: eq 1s infinite ease-in-out;
+}
+
+.eq-bar.delay-100 {
+  animation-delay: 0.1s;
+}
+.eq-bar.delay-200 {
+  animation-delay: 0.2s;
+}
+
+@keyframes eq {
+  0%,
+  100% {
+    height: 6px;
+  }
+  50% {
+    height: 14px;
+  }
+}

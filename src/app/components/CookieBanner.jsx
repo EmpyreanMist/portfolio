@@ -28,7 +28,7 @@ export default function CookieBanner() {
   };
 
   const loadGtag = () => {
-    if (window.gtag) return; // already loaded
+    if (window.gtag) return;
     const script1 = document.createElement("script");
     script1.src = "https://www.googletagmanager.com/gtag/js?id=G-SFCC2X5GY0";
     script1.async = true;
