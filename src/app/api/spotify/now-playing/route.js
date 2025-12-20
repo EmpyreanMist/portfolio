@@ -76,6 +76,8 @@ export async function GET() {
       image: item.album.images[0]?.url ?? null,
       url: item.external_urls.spotify,
       isPlaying: data.is_playing,
+      progressMs: data.progress_ms,
+      durationMs: item.duration_ms,
     };
 
     lastPlayedAt = Date.now();
