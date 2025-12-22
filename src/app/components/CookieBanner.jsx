@@ -49,21 +49,21 @@ export default function CookieBanner() {
   return (
     <div className="fixed bottom-4 left-4 right-4 max-w-xl mx-auto bg-white dark:bg-gray-900 text-black dark:text-white border dark:border-gray-700 shadow-xl p-4 rounded-xl z-50">
       <p className="mb-4 text-sm">
-        Denna sida använder cookies för att förstå vad som fungerar på sidan och
-        förbättra din upplevelse. Inget personligt sparas. Är det okej?
+        This website uses cookies to understand what works and to improve your
+        experience. No personal data is stored. Is that okay?
       </p>
       <div className="flex justify-end gap-2">
         <button
           onClick={declineCookies}
           className="px-4 py-2 text-sm rounded-md border border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-800"
         >
-          Nej tack
+          No thanks
         </button>
         <button
           onClick={acceptCookies}
           className="px-4 py-2 text-sm rounded-md bg-blue-600 text-white hover:bg-blue-700"
         >
-          Acceptera
+          Accept
         </button>
       </div>
     </div>
