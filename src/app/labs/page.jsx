@@ -1,5 +1,8 @@
+"use client";
 import MonkeytypeStats from "../components/MonkeyTypeStats";
 import SpotifyNowPlaying from "../components/SpotifyNowPlaying";
+import Snowfall from "react-snowfall";
+
 export default function LabsPage() {
   return (
     <main
@@ -11,6 +14,13 @@ export default function LabsPage() {
     text-gray-900 dark:text-gray-100
   "
     >
+      <Snowfall
+        style={{
+          position: "fixed",
+          width: "100vw",
+          height: "100vh",
+        }}
+      />
       <div className="max-w-2xl mx-auto pt-32 text-center">
         <h1 className="text-4xl font-bold mb-4 text-blue-700 dark:text-blue-400">
           Labs
