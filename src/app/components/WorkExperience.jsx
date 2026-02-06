@@ -40,6 +40,19 @@ const experiencesData = [
     image: "/images/projects/akut-duon.png",
     previewUrl: "https://akutduon.se/",
   },
+  {
+    id: 4,
+    titleLine1: "Software Developer",
+    titleLine2: "Internship",
+    title: "Software Developer Internship",
+    company: "Metria",
+    description:
+      "Internship focused on geospatial systems and logging pipelines. Working hands-on with real production data and modern tooling in a professional development team.",
+    date: "Feb 2026 – May 2026",
+    tag: ["All", "Work"],
+    image: "/images/projects/metria.png",
+    previewUrl: "https://www.metria.se/",
+  },
 ];
 
 const ExperienceCard = ({ exp, index }) => {
@@ -78,10 +91,18 @@ const ExperienceCard = ({ exp, index }) => {
         <div className="relative p-6 rounded-xl overflow-hidden border border-gray-200 dark:border-gray-800 shadow-md hover:shadow-xl transition bg-white dark:bg-black">
           <div className="absolute inset-0 blur-3xl opacity-40 z-0 pointer-events-none bg-[radial-gradient(circle_at_center,_rgba(96,165,250,0.3)_0%,_rgba(168,85,247,0.25)_35%,_transparent_70%)] dark:opacity-10" />
           <div className="relative z-10">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between">
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-                {exp.title}
+            <div className="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-2 md:gap-4 items-start">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white leading-tight">
+                {exp.titleLine2 ? (
+                  <>
+                    <span className="block">{exp.titleLine1}</span>
+                    <span className="block pl-[9ch]">{exp.titleLine2}</span>
+                  </>
+                ) : (
+                  exp.title
+                )}
               </h3>
+
               <p className="text-sm text-gray-500 dark:text-gray-400 mt-1 md:mt-0">
                 {exp.date}
               </p>
@@ -97,7 +118,7 @@ const ExperienceCard = ({ exp, index }) => {
                 className="object-cover hover:scale-105 transition-transform duration-700 ease-out"
               />
             </div>
-            <p className="text-gray-700 dark:text-[#ADB7BE] mb-4">
+            <p className="text-gray-700 dark:text-[#ADB7BE] mb-4 text-left leading-relaxed">
               {exp.description}
             </p>
             <div className="flex gap-3">
@@ -132,7 +153,7 @@ const ExperienceCard = ({ exp, index }) => {
 const WorkExperienceSection = () => {
   const [tag] = useState("All");
   const filteredExperiences = experiencesData.filter((exp) =>
-    exp.tag.includes(tag)
+    exp.tag.includes(tag),
   );
 
   const containerRef = useRef(null);
