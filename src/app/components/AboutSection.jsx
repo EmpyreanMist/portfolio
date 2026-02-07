@@ -58,6 +58,16 @@ const TAB_DATA = [
             Spring Boot: Mastering the Fundamentals | Code with Mosh
           </Link>
         </li>
+        <li>
+          <Link
+            href="https://www.udemy.com/certificate/UC-722cb055-ccfa-48c7-b86a-9985f342996b/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[17px] font-medium text-gray-900 dark:text-gray-100 underline underline-offset-2 hover:text-blue-600 dark:hover:text-blue-400 transition-all"
+          >
+            Mastering Elasticsearch: From Basics to Certification
+          </Link>
+        </li>
       </ul>
     ),
   },
