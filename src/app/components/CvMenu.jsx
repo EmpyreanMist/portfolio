@@ -31,7 +31,7 @@ export default function CvMenu() {
   const menuItems = [
     {
       label: "Preview (Swedish)",
-      url: "/ChristianFrykstenCV-SWE.pdf",
+      url: "/christian-fryksten-cv-swe.pdf",
       preview: true,
     },
     {
@@ -41,7 +41,7 @@ export default function CvMenu() {
     },
     {
       label: "Download (Swedish)",
-      url: "/ChristianFrykstenCV-SWE.pdf",
+      url: "/christian-fryksten-cv-swe.pdf",
       download: true,
     },
     {
