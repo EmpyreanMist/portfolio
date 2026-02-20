@@ -33,6 +33,7 @@ export default function TechStackSection() {
       "Next.js",
       "TypeScript",
       "Java",
+      "ElasticSearch",
     ],
     Testing: ["Cypress", "Jest", "JUnit"],
     DevOps: ["Git", "GitHub", "NPM", "GitHub Actions", "Docker"],

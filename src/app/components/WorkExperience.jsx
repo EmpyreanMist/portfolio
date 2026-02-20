@@ -38,7 +38,6 @@ const experiencesData = [
     date: "November 2025",
     tag: ["All", "Web"],
     image: "/images/projects/akut-duon.png",
-    previewUrl: "https://akutduon.se/",
   },
   {
     id: 4,

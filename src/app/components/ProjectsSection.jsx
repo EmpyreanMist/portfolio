@@ -79,7 +79,6 @@ const projectsData = [
     image: "/images/projects/zipp.png",
     tag: ["All", "Web", "Java"],
     gitUrl: "https://github.com/fungover/zipp",
-    previewUrl: "https://zipp.city",
   },
 ];
 
@@ -120,7 +119,7 @@ const ProjectsSection = () => {
   const handleTagChange = (newTag) => setTag(newTag);
 
   const filteredProjects = projectsData.filter((project) =>
-    project.tag.includes(tag)
+    project.tag.includes(tag),
   );
 
   return (
