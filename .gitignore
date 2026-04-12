@@ -26,6 +26,7 @@ yarn-error.log*
 
 # local env files
 .env*.local
+garmin.config.json
 
 # vercel
 .vercel

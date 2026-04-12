@@ -21,6 +21,26 @@ Examples include:
 - UI and UX experiments
 - Small tools and technical explorations
 
+### Garmin steps
+
+The Labs Garmin card reads today's step count from `/api/garmin/steps` and refreshes once per hour. The default path uses the unofficial Node package `garmin-connect`:
+
+- `GARMIN_USERNAME` or `GARMIN_EMAIL`
+- `GARMIN_PASSWORD`
+- `GARMIN_DOMAIN` (optional, defaults to `garmin.com`)
+- `GARMIN_STEPS_TIME_ZONE` (optional, defaults to `Europe/Stockholm`)
+
+Wrap `GARMIN_PASSWORD` in quotes if it contains `#` or other shell/env special characters.
+
+`garmin-connect` does not currently handle MFA, so accounts requiring a one-time code may fail to log in. As a fallback, configure a Garmin Health API proxy or an Android/Health Connect automation endpoint with:
+
+- `GARMIN_STEPS_ENDPOINT`
+- `GARMIN_STEPS_BEARER_TOKEN` (optional)
+- `GARMIN_STEPS_API_KEY` (optional)
+- `GARMIN_STEPS_API_KEY_HEADER` (optional, defaults to `x-api-key`)
+
+The endpoint can return JSON such as `{ "steps": 7450, "goal": 10000, "date": "2026-04-12" }`.
+
 ## Tech Stack
 
 Built with **Next.js**, **React**, and **Tailwind CSS**.

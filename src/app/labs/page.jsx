@@ -1,4 +1,5 @@
 "use client";
+import GarminSteps from "../components/GarminSteps";
 import MonkeytypeStats from "../components/MonkeyTypeStats";
 import SpotifyNowPlaying from "../components/SpotifyNowPlaying";
 
@@ -25,6 +26,7 @@ export default function LabsPage() {
 
       <MonkeytypeStats />
       <SpotifyNowPlaying />
+      <GarminSteps />
     </main>
   );
 }
