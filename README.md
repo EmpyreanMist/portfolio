@@ -40,7 +40,7 @@ Wrap `GARMIN_PASSWORD` in quotes if it contains `#` or other shell/env special c
 - `GARMIN_STEPS_API_KEY` (optional)
 - `GARMIN_STEPS_API_KEY_HEADER` (optional, defaults to `x-api-key`)
 
-The endpoint can return JSON such as `{ "steps": 7450, "goal": 10000, "monthSteps": 123456, "monthGoalDays": 8, "date": "2026-04-12" }`.
+The endpoint can return JSON such as `{ "steps": 7450, "goal": 10000, "monthSteps": 123456, "monthGoalDays": 8, "monthDays": [{ "date": "2026-04-12", "steps": 7450 }], "date": "2026-04-12" }`.
 
 ## Tech Stack
 
