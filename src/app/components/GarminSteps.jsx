@@ -41,6 +41,9 @@ export default function GarminSteps() {
 
   const hasSteps = typeof steps?.steps === "number";
   const hasGoal = typeof steps?.goal === "number" && steps.goal > 0;
+  const hasMonthSteps = typeof steps?.monthSteps === "number";
+  const hasMonthGoalDays = typeof steps?.monthGoalDays === "number";
+  const monthGoal = steps?.monthGoal ?? 10000;
   const goalProgress = hasGoal
     ? Math.min(100, Math.max(0, (steps.steps / steps.goal) * 100))
     : null;
@@ -52,7 +55,7 @@ export default function GarminSteps() {
       </h2>
 
       <p className="text-sm max-w-xl mb-10 text-gray-700 dark:text-gray-400">
-        Steps walked today, refreshed once every hour.
+        Steps walked today and this month, refreshed once every hour.
       </p>
 
       <div className="w-full max-w-4xl">
@@ -116,6 +119,26 @@ export default function GarminSteps() {
                 </div>
               </div>
             )}
+
+            {(hasMonthSteps || hasMonthGoalDays) && (
+              <div className="mt-8 grid gap-6 border-t border-blue-500/10 pt-6 sm:grid-cols-2">
+                {hasMonthSteps && (
+                  <Metric
+                    label="Steps this month"
+                    value={formatNumber(steps.monthSteps)}
+                    detail={`Since ${steps.monthStart}`}
+                  />
+                )}
+
+                {hasMonthGoalDays && (
+                  <Metric
+                    label={`${formatNumber(monthGoal)}+ step days`}
+                    value={formatNumber(steps.monthGoalDays)}
+                    detail="This month"
+                  />
+                )}
+              </div>
+            )}
           </div>
         ) : (
           <div className="h-[180px] flex items-center justify-center text-sm text-gray-400">
@@ -124,6 +147,22 @@ export default function GarminSteps() {
         )}
       </div>
     </section>
+  );
+}
+
+function Metric({ label, value, detail }) {
+  return (
+    <div>
+      <div className="text-xs uppercase tracking-wider text-gray-500 mb-2">
+        {label}
+      </div>
+
+      <div className="text-3xl font-semibold text-blue-700 dark:text-blue-400 tabular-nums">
+        {value}
+      </div>
+
+      <div className="text-xs text-gray-600 dark:text-gray-500">{detail}</div>
+    </div>
   );
 }
 

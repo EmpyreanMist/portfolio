@@ -29,6 +29,7 @@ The Labs Garmin card reads today's step count from `/api/garmin/steps` and refre
 - `GARMIN_PASSWORD`
 - `GARMIN_DOMAIN` (optional, defaults to `garmin.com`)
 - `GARMIN_STEPS_TIME_ZONE` (optional, defaults to `Europe/Stockholm`)
+- `GARMIN_STEPS_GOAL` (optional, defaults to `10000`)
 
 Wrap `GARMIN_PASSWORD` in quotes if it contains `#` or other shell/env special characters.
 
@@ -39,7 +40,7 @@ Wrap `GARMIN_PASSWORD` in quotes if it contains `#` or other shell/env special c
 - `GARMIN_STEPS_API_KEY` (optional)
 - `GARMIN_STEPS_API_KEY_HEADER` (optional, defaults to `x-api-key`)
 
-The endpoint can return JSON such as `{ "steps": 7450, "goal": 10000, "date": "2026-04-12" }`.
+The endpoint can return JSON such as `{ "steps": 7450, "goal": 10000, "monthSteps": 123456, "monthGoalDays": 8, "date": "2026-04-12" }`.
 
 ## Tech Stack
 

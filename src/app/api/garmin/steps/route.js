@@ -6,6 +6,7 @@ export const runtime = "nodejs";
 
 const CACHE_TTL_MS = 60 * 60 * 1000;
 const DEFAULT_TIME_ZONE = "Europe/Stockholm";
+const DEFAULT_STEP_GOAL = 10000;
 
 let cachedSteps = null;
 let cachedAt = 0;
@@ -23,8 +24,10 @@ export async function GET() {
 
   try {
     const timeZone = process.env.GARMIN_STEPS_TIME_ZONE || DEFAULT_TIME_ZONE;
-    const today = getDateKey(new Date(), timeZone);
-    const normalized = await fetchSteps(today);
+    const nowDate = new Date();
+    const today = getDateKey(nowDate, timeZone);
+    const monthStart = getMonthStartKey(nowDate, timeZone);
+    const normalized = await fetchSteps(today, monthStart);
 
     if (normalized.configured === false) {
       return jsonResponse(normalized);
@@ -39,6 +42,10 @@ export async function GET() {
       source: normalized.source,
       steps: normalized.steps,
       goal: normalized.goal,
+      monthSteps: normalized.monthSteps,
+      monthGoalDays: normalized.monthGoalDays,
+      monthGoal: normalized.monthGoal || getConfiguredStepGoal(),
+      monthStart,
       date: normalized.date || today,
       updatedAt:
         parseDateTime(normalized.updatedAt) || new Date(now).toISOString(),
@@ -70,9 +77,9 @@ export async function GET() {
   }
 }
 
-async function fetchSteps(today) {
+async function fetchSteps(today, monthStart) {
   if (hasGarminCredentials()) {
-    return fetchGarminConnectSteps(today);
+    return fetchGarminConnectSteps(today, monthStart);
   }
 
   if (process.env.GARMIN_STEPS_ENDPOINT) {
@@ -86,20 +93,22 @@ async function fetchSteps(today) {
   };
 }
 
-async function fetchGarminConnectSteps(today) {
+async function fetchGarminConnectSteps(today, monthStart) {
   const client = await getGarminClient();
   const domain = getGarminDomain();
-  const dailyStepsUrl = `https://connectapi.${domain}/usersummary-service/stats/steps/daily/${today}/${today}`;
+  const dailyStepsUrl = `https://connectapi.${domain}/usersummary-service/stats/steps/daily/${monthStart}/${today}`;
   const days = await client.get(dailyStepsUrl);
   const dayStats = Array.isArray(days)
-    ? days.find((entry) => entry.calendarDate === today) || days[0]
+    ? days.find((entry) => entry.calendarDate === today)
     : null;
+  const monthSummary = summarizeMonthlySteps(days);
 
   if (dayStats) {
     return {
       source: "garmin-connect",
       steps: readNumber(dayStats, ["totalSteps"]),
       goal: readNumber(dayStats, ["stepGoal"]),
+      ...monthSummary,
       date: dayStats.calendarDate || today,
     };
   }
@@ -110,6 +119,7 @@ async function fetchGarminConnectSteps(today) {
     source: "garmin-connect",
     steps: Number.isFinite(steps) ? Math.round(steps) : null,
     goal: null,
+    ...monthSummary,
     date: today,
   };
 }
@@ -126,7 +136,7 @@ async function fetchEndpointSteps(today) {
 
   return {
     source: "endpoint",
-    ...normalizeSteps(await res.json(), today),
+    ...normalizeEndpointSteps(await res.json(), today),
   };
 }
 
@@ -183,6 +193,13 @@ function buildHeaders() {
   }
 
   return headers;
+}
+
+function normalizeEndpointSteps(data, today) {
+  return {
+    ...normalizeSteps(data, today),
+    ...normalizeMonthlySteps(data),
+  };
 }
 
 function normalizeSteps(data, today) {
@@ -250,6 +267,70 @@ function normalizeSteps(data, today) {
   };
 }
 
+function normalizeMonthlySteps(data) {
+  if (!data) return {};
+
+  if (Array.isArray(data)) {
+    return summarizeMonthlySteps(data);
+  }
+
+  if (data.data) {
+    return normalizeMonthlySteps(data.data);
+  }
+
+  const dailySummary =
+    data.dailySummaries ||
+    data.userDailySummaries ||
+    data.summaries ||
+    data.dailies;
+
+  if (dailySummary) {
+    return normalizeMonthlySteps(dailySummary);
+  }
+
+  const monthGoal = readNumber(data, ["monthGoal", "monthlyGoal"]);
+
+  return {
+    monthSteps: readNumber(data, [
+      "monthSteps",
+      "monthlySteps",
+      "stepsThisMonth",
+      "totalStepsThisMonth",
+    ]),
+    monthGoalDays: readNumber(data, [
+      "monthGoalDays",
+      "monthlyGoalDays",
+      "goalDaysThisMonth",
+      "daysGoalMetThisMonth",
+      "daysOverStepGoal",
+    ]),
+    monthGoal: monthGoal || getConfiguredStepGoal(),
+  };
+}
+
+function summarizeMonthlySteps(days) {
+  if (!Array.isArray(days)) {
+    return {
+      monthSteps: null,
+      monthGoalDays: null,
+      monthGoal: getConfiguredStepGoal(),
+    };
+  }
+
+  const monthGoal = getConfiguredStepGoal();
+  const dailySteps = days
+    .map((entry) =>
+      readNumber(entry, ["totalSteps", "steps", "Steps", "stepCount"])
+    )
+    .filter((steps) => typeof steps === "number");
+
+  return {
+    monthSteps: dailySteps.reduce((sum, steps) => sum + steps, 0),
+    monthGoalDays: dailySteps.filter((steps) => steps >= monthGoal).length,
+    monthGoal,
+  };
+}
+
 function readNumber(source, keys) {
   if (!source) return null;
 
@@ -308,6 +389,21 @@ function getDateKey(date, timeZone) {
   const day = parts.find((part) => part.type === "day")?.value;
 
   return `${year}-${month}-${day}`;
+}
+
+function getMonthStartKey(date, timeZone) {
+  const today = getDateKey(date, timeZone);
+  return `${today.slice(0, 8)}01`;
+}
+
+function getConfiguredStepGoal() {
+  const goal = Number(process.env.GARMIN_STEPS_GOAL);
+
+  if (Number.isFinite(goal) && goal > 0) {
+    return Math.round(goal);
+  }
+
+  return DEFAULT_STEP_GOAL;
 }
 
 function parseDateTime(value) {
