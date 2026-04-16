@@ -67,7 +67,7 @@ export default function GarminSteps() {
 
   return (
     <section className="mt-32 flex flex-col items-center pb-24 text-center">
-      <h2 className="mb-3 text-sm font-medium uppercase text-teal-700 dark:text-teal-300">
+      <h2 className="mb-3 text-sm uppercase tracking-widest text-blue-700 dark:text-blue-400">
         Garmin / Today
       </h2>
 
@@ -81,7 +81,7 @@ export default function GarminSteps() {
             <BlueLoader />
           </div>
         ) : hasSteps ? (
-          <div className="rounded-lg border border-zinc-200/80 bg-white/85 p-6 text-left shadow-sm shadow-zinc-900/5 backdrop-blur-sm dark:border-white/10 dark:bg-zinc-950/80 dark:shadow-none sm:p-7">
+          <div className="rounded-lg border border-gray-200 bg-white p-6 text-left shadow-sm shadow-blue-500/10 dark:border-blue-400/40 dark:bg-blue-500/10 dark:shadow-none sm:p-7">
             <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <h3 className="mb-3 text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
@@ -92,7 +92,7 @@ export default function GarminSteps() {
                   className={`text-5xl font-semibold tabular-nums sm:text-6xl ${
                     reachedTodayGoal
                       ? "text-amber-500 dark:text-amber-300"
-                      : "text-teal-700 dark:text-teal-300"
+                      : "text-blue-700 dark:text-blue-400"
                   }`}
                 >
                   {formatNumber(steps.steps)}
@@ -119,12 +119,12 @@ export default function GarminSteps() {
 
             {hasGoal && (
               <div className="mt-7">
-                <div className="h-2.5 w-full overflow-hidden rounded bg-zinc-200 dark:bg-white/10">
+                <div className="h-2.5 w-full overflow-hidden rounded bg-blue-100 dark:bg-white/10">
                   <div
                     className={`h-2.5 rounded ${
                       reachedTodayGoal
                         ? "bg-amber-400"
-                        : "bg-gradient-to-r from-teal-500 to-emerald-400"
+                        : "bg-blue-500"
                     }`}
                     style={{ width: `${goalProgress}%` }}
                   />
@@ -138,7 +138,7 @@ export default function GarminSteps() {
             )}
 
             {(hasMonthSteps || hasMonthDays) && (
-              <div className="mt-8 border-t border-zinc-200 pt-7 dark:border-white/10">
+              <div className="mt-8 border-t border-blue-500/10 pt-7 dark:border-blue-400/20">
                 <div className="grid gap-5 sm:grid-cols-3">
                   <Metric
                     label="Monthly steps"
@@ -172,7 +172,7 @@ export default function GarminSteps() {
             )}
           </div>
         ) : (
-          <div className="flex h-[180px] items-center justify-center rounded-lg border border-zinc-200/80 bg-white/70 text-sm text-gray-500 dark:border-white/10 dark:bg-zinc-950/70 dark:text-gray-400">
+          <div className="flex h-[180px] items-center justify-center rounded-lg border border-gray-200 bg-white text-sm text-gray-500 dark:border-blue-400/40 dark:bg-blue-500/10 dark:text-gray-400">
             Garmin step data is not available yet.
           </div>
         )}
@@ -181,11 +181,11 @@ export default function GarminSteps() {
   );
 }
 
-function Metric({ label, value, detail, tone = "teal" }) {
+function Metric({ label, value, detail, tone = "blue" }) {
   const valueColor =
     tone === "gold"
       ? "text-amber-500 dark:text-amber-300"
-      : "text-teal-700 dark:text-teal-300";
+      : "text-blue-700 dark:text-blue-400";
 
   return (
     <div>
@@ -236,7 +236,7 @@ function MonthlyHeatmap({ days, goal, goalDays, monthLabel }) {
         </div>
       </div>
 
-      <div className="mt-5 overflow-x-auto rounded-lg border border-zinc-200/80 bg-zinc-50/80 p-4 dark:border-white/10 dark:bg-black/20">
+      <div className="mt-5 overflow-x-auto rounded-lg border border-blue-500/10 bg-blue-50/50 p-4 dark:border-blue-400/20 dark:bg-blue-500/5">
         <div className="mx-auto w-max">
           <div className="grid grid-cols-7 gap-1.5 text-center text-[10px] font-medium uppercase text-gray-400 dark:text-gray-500 sm:gap-2">
             {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
@@ -258,7 +258,7 @@ function MonthlyHeatmap({ days, goal, goalDays, monthLabel }) {
                     cell
                   )} ${
                     cell.isToday
-                      ? "ring-2 ring-teal-400/70 ring-offset-2 ring-offset-zinc-50 dark:ring-offset-zinc-950"
+                      ? "ring-2 ring-blue-400/70 ring-offset-2 ring-offset-blue-50 dark:ring-offset-slate-950"
                       : ""
                   }`}
                   title={getDayTitle(cell)}
@@ -364,7 +364,7 @@ function getStepIntensity(steps, goal) {
 
 function getHeatmapColor(cell) {
   if (cell.future) {
-    return "border-dashed border-zinc-300 bg-zinc-100 text-zinc-400 dark:border-white/15 dark:bg-white/5 dark:text-zinc-500";
+    return "border-dashed border-gray-300 bg-gray-100 text-gray-400 dark:border-blue-400/20 dark:bg-blue-400/5 dark:text-gray-500";
   }
 
   if (cell.goalMet) {
@@ -376,10 +376,10 @@ function getHeatmapColor(cell) {
 
 function getIntensityColor(intensity) {
   const colors = [
-    "border-zinc-200 bg-white text-zinc-400 dark:border-white/10 dark:bg-white/10 dark:text-zinc-500",
-    "border-cyan-200 bg-cyan-100 text-cyan-800 dark:border-cyan-900/70 dark:bg-cyan-950 dark:text-cyan-200",
-    "border-teal-300 bg-teal-200 text-teal-900 dark:border-teal-700 dark:bg-teal-800 dark:text-teal-100",
-    "border-emerald-400 bg-emerald-400 text-emerald-950 dark:border-emerald-500 dark:bg-emerald-500 dark:text-emerald-950",
+    "border-gray-200 bg-white text-gray-400 dark:border-blue-400/10 dark:bg-white/10 dark:text-gray-500",
+    "border-blue-200 bg-blue-100 text-blue-800 dark:border-blue-900/70 dark:bg-blue-950 dark:text-blue-200",
+    "border-blue-300 bg-blue-200 text-blue-900 dark:border-blue-700 dark:bg-blue-800 dark:text-blue-100",
+    "border-blue-500 bg-blue-500 text-white dark:border-blue-400 dark:bg-blue-400 dark:text-blue-950",
   ];
 
   return colors[intensity] || colors[0];
