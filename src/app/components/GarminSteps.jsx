@@ -57,6 +57,12 @@ export default function GarminSteps() {
     typeof steps?.monthGoalDays === "number"
       ? steps.monthGoalDays
       : monthDays.filter((day) => day.goalMet).length;
+  const elapsedMonthDays =
+    monthDays.filter((day) => !day.future).length || getDayOfMonth(todayKey);
+  const monthDailyAverage =
+    elapsedMonthDays > 0 && (hasMonthSteps || hasMonthDays)
+      ? Math.round(monthSteps / elapsedMonthDays)
+      : null;
   const monthLabel = formatMonthLabel(
     monthDays[0]?.date || steps?.monthStart || steps?.date
   );
@@ -139,11 +145,21 @@ export default function GarminSteps() {
 
             {(hasMonthSteps || hasMonthDays) && (
               <div className="mt-8 border-t border-blue-500/10 pt-7 dark:border-blue-400/20">
-                <div className="grid gap-5 sm:grid-cols-3">
+                <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
                   <Metric
                     label="Monthly steps"
                     value={formatNumber(monthSteps)}
                     detail={monthLabel}
+                  />
+
+                  <Metric
+                    label="Daily average"
+                    value={
+                      monthDailyAverage === null
+                        ? "-"
+                        : formatNumber(monthDailyAverage)
+                    }
+                    detail={`${formatNumber(elapsedMonthDays)} days so far`}
                   />
 
                   <Metric
@@ -415,6 +431,11 @@ function getLocalDateKey(date) {
   const day = String(date.getDate()).padStart(2, "0");
 
   return `${year}-${month}-${day}`;
+}
+
+function getDayOfMonth(dateKey) {
+  const day = Number(dateKey?.slice(8, 10));
+  return Number.isFinite(day) && day > 0 ? day : 0;
 }
 
 function formatNumber(value) {
