@@ -28,7 +28,8 @@ export async function GET() {
     const nowDate = new Date();
     const today = getDateKey(nowDate, timeZone);
     const monthStart = getMonthStartKey(nowDate, timeZone);
-    const normalized = await fetchSteps(today, monthStart);
+    const yearStart = getYearStartKey(nowDate, timeZone);
+    const normalized = await fetchSteps(today, monthStart, yearStart);
 
     if (normalized.configured === false) {
       return jsonResponse(normalized);
@@ -47,6 +48,10 @@ export async function GET() {
       monthGoalDays: normalized.monthGoalDays,
       monthGoal: normalized.monthGoal || getConfiguredStepGoal(),
       monthDays: normalized.monthDays,
+      yearSteps: normalized.yearSteps,
+      yearGoalDays: normalized.yearGoalDays,
+      yearMonths: normalized.yearMonths,
+      yearStart,
       monthStart,
       date: normalized.date || today,
       updatedAt:
@@ -79,13 +84,13 @@ export async function GET() {
   }
 }
 
-async function fetchSteps(today, monthStart) {
+async function fetchSteps(today, monthStart, yearStart) {
   if (hasGarminCredentials()) {
-    return fetchGarminConnectSteps(today, monthStart);
+    return fetchGarminConnectSteps(today, monthStart, yearStart);
   }
 
   if (process.env.GARMIN_STEPS_ENDPOINT) {
-    return fetchEndpointSteps(today, monthStart);
+    return fetchEndpointSteps(today, monthStart, yearStart);
   }
 
   return {
@@ -95,14 +100,15 @@ async function fetchSteps(today, monthStart) {
   };
 }
 
-async function fetchGarminConnectSteps(today, monthStart) {
+async function fetchGarminConnectSteps(today, monthStart, yearStart) {
   const client = await getGarminClient();
   const domain = getGarminDomain();
-  const days = await fetchGarminDailySteps(client, domain, monthStart, today);
+  const days = await fetchGarminDailySteps(client, domain, yearStart, today);
   const dayStats = Array.isArray(days)
     ? days.find((entry) => entry.calendarDate === today)
     : null;
   const monthSummary = summarizeMonthlySteps(days, monthStart, today);
+  const yearSummary = summarizeYearlySteps(days, yearStart, today);
 
   if (dayStats) {
     return {
@@ -110,6 +116,7 @@ async function fetchGarminConnectSteps(today, monthStart) {
       steps: readNumber(dayStats, ["totalSteps"]),
       goal: readNumber(dayStats, ["stepGoal"]),
       ...monthSummary,
+      ...yearSummary,
       date: dayStats.calendarDate || today,
     };
   }
@@ -121,6 +128,7 @@ async function fetchGarminConnectSteps(today, monthStart) {
     steps: Number.isFinite(steps) ? Math.round(steps) : null,
     goal: null,
     ...monthSummary,
+    ...yearSummary,
     date: today,
   };
 }
@@ -151,7 +159,7 @@ function getGarminDailyStepsUrl(domain, startDate, endDate) {
   return `https://connectapi.${domain}/usersummary-service/stats/steps/daily/${startDate}/${endDate}`;
 }
 
-async function fetchEndpointSteps(today, monthStart) {
+async function fetchEndpointSteps(today, monthStart, yearStart) {
   const res = await fetch(process.env.GARMIN_STEPS_ENDPOINT, {
     headers: buildHeaders(),
     cache: "no-store",
@@ -163,7 +171,7 @@ async function fetchEndpointSteps(today, monthStart) {
 
   return {
     source: "endpoint",
-    ...normalizeEndpointSteps(await res.json(), today, monthStart),
+    ...normalizeEndpointSteps(await res.json(), today, monthStart, yearStart),
   };
 }
 
@@ -222,10 +230,11 @@ function buildHeaders() {
   return headers;
 }
 
-function normalizeEndpointSteps(data, today, monthStart) {
+function normalizeEndpointSteps(data, today, monthStart, yearStart) {
   return {
     ...normalizeSteps(data, today),
     ...normalizeMonthlySteps(data, monthStart, today),
+    ...normalizeYearlySteps(data, yearStart, today),
   };
 }
 
@@ -337,6 +346,46 @@ function normalizeMonthlySteps(data, monthStart, today) {
   };
 }
 
+function normalizeYearlySteps(data, yearStart, today) {
+  if (!data) return {};
+
+  if (Array.isArray(data)) {
+    return summarizeYearlySteps(data, yearStart, today);
+  }
+
+  if (data.data) {
+    return normalizeYearlySteps(data.data, yearStart, today);
+  }
+
+  const dailySummary =
+    data.dailySummaries ||
+    data.userDailySummaries ||
+    data.summaries ||
+    data.dailies;
+
+  if (dailySummary) {
+    return normalizeYearlySteps(dailySummary, yearStart, today);
+  }
+
+  return {
+    yearSteps: readNumber(data, [
+      "yearSteps",
+      "yearlySteps",
+      "stepsThisYear",
+      "totalStepsThisYear",
+    ]),
+    yearGoalDays: readNumber(data, [
+      "yearGoalDays",
+      "yearlyGoalDays",
+      "goalDaysThisYear",
+      "daysGoalMetThisYear",
+    ]),
+    yearMonths: normalizeYearMonths(
+      data.yearMonths || data.yearlyMonths || data.monthlyTotals
+    ),
+  };
+}
+
 function summarizeMonthlySteps(days, monthStart, today) {
   if (!Array.isArray(days)) {
     return {
@@ -348,21 +397,7 @@ function summarizeMonthlySteps(days, monthStart, today) {
   }
 
   const monthGoal = getConfiguredStepGoal();
-  const stepsByDate = new Map();
-
-  for (const entry of days) {
-    const date = getDateValue(entry);
-    const steps = readNumber(entry, [
-      "totalSteps",
-      "steps",
-      "Steps",
-      "stepCount",
-    ]);
-
-    if (date && typeof steps === "number") {
-      stepsByDate.set(date, steps);
-    }
-  }
+  const stepsByDate = getStepsByDate(days);
 
   const monthDays = enumerateDateKeys(monthStart, today).map((date) => {
     const steps = stepsByDate.get(date) ?? 0;
@@ -380,6 +415,45 @@ function summarizeMonthlySteps(days, monthStart, today) {
     monthGoalDays: monthDays.filter((day) => day.goalMet).length,
     monthGoal,
     monthDays,
+  };
+}
+
+function summarizeYearlySteps(days, yearStart, today) {
+  if (!Array.isArray(days)) {
+    return {
+      yearSteps: null,
+      yearGoalDays: null,
+      yearMonths: null,
+    };
+  }
+
+  const monthGoal = getConfiguredStepGoal();
+  const stepsByDate = getStepsByDate(days);
+  const months = new Map();
+
+  for (const date of enumerateDateKeys(yearStart, today)) {
+    const month = date.slice(0, 7);
+    const steps = stepsByDate.get(date) ?? 0;
+    const currentMonth =
+      months.get(month) || {
+        month,
+        steps: 0,
+        goalDays: 0,
+        days: 0,
+      };
+
+    currentMonth.steps += steps;
+    currentMonth.goalDays += steps >= monthGoal ? 1 : 0;
+    currentMonth.days += 1;
+    months.set(month, currentMonth);
+  }
+
+  const yearMonths = Array.from(months.values());
+
+  return {
+    yearSteps: yearMonths.reduce((sum, month) => sum + month.steps, 0),
+    yearGoalDays: yearMonths.reduce((sum, month) => sum + month.goalDays, 0),
+    yearMonths,
   };
 }
 
@@ -412,6 +486,61 @@ function normalizeMonthDays(days) {
       };
     })
     .filter(Boolean);
+}
+
+function normalizeYearMonths(months) {
+  if (!Array.isArray(months)) {
+    return null;
+  }
+
+  return months
+    .map((month) => {
+      const monthKey = getMonthValue(month);
+
+      if (!monthKey) {
+        return null;
+      }
+
+      return {
+        month: monthKey,
+        steps: readNumber(month, [
+          "steps",
+          "Steps",
+          "totalSteps",
+          "stepCount",
+          "monthSteps",
+        ]),
+        goalDays: readNumber(month, [
+          "goalDays",
+          "monthGoalDays",
+          "daysGoalMet",
+          "daysOverStepGoal",
+        ]),
+        days: readNumber(month, ["days", "trackedDays", "daysTracked"]),
+      };
+    })
+    .filter(Boolean)
+    .sort((left, right) => left.month.localeCompare(right.month));
+}
+
+function getStepsByDate(days) {
+  const stepsByDate = new Map();
+
+  for (const entry of days) {
+    const date = getDateValue(entry);
+    const steps = readNumber(entry, [
+      "totalSteps",
+      "steps",
+      "Steps",
+      "stepCount",
+    ]);
+
+    if (date && typeof steps === "number") {
+      stepsByDate.set(date, steps);
+    }
+  }
+
+  return stepsByDate;
 }
 
 function getStepIntensity(steps, goal) {
@@ -467,6 +596,18 @@ function getDateValue(source) {
   ]);
 }
 
+function getMonthValue(source) {
+  const month =
+    readString(source, ["month", "monthKey", "yearMonth"]) ||
+    getDateValue(source)?.slice(0, 7);
+
+  if (!month || !/^\d{4}-\d{2}$/.test(month)) {
+    return null;
+  }
+
+  return month;
+}
+
 function getDateKey(date, timeZone) {
   const parts = new Intl.DateTimeFormat("en-CA", {
     timeZone,
@@ -485,6 +626,11 @@ function getDateKey(date, timeZone) {
 function getMonthStartKey(date, timeZone) {
   const today = getDateKey(date, timeZone);
   return `${today.slice(0, 8)}01`;
+}
+
+function getYearStartKey(date, timeZone) {
+  const today = getDateKey(date, timeZone);
+  return `${today.slice(0, 4)}-01-01`;
 }
 
 function enumerateDateKeys(start, end) {
