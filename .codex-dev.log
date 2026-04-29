@@ -1,0 +1,16 @@
+
+> portfolio-website@0.1.0 dev
+> next dev
+
+   ▲ Next.js 15.3.8
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.0.201:3000
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 7.1s
+ ○ Compiling / ...
+ ✓ Compiled / in 5.3s (1440 modules)
+ GET / 200 in 6294ms
+ ✓ Compiled in 254ms (672 modules)
+[?25h

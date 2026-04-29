@@ -7,6 +7,7 @@ export const runtime = "nodejs";
 const CACHE_TTL_MS = 60 * 60 * 1000;
 const DEFAULT_TIME_ZONE = "Europe/Stockholm";
 const DEFAULT_STEP_GOAL = 10000;
+const MAX_GARMIN_DAILY_RANGE_LENGTH = 28;
 
 let cachedSteps = null;
 let cachedAt = 0;
@@ -97,8 +98,7 @@ async function fetchSteps(today, monthStart) {
 async function fetchGarminConnectSteps(today, monthStart) {
   const client = await getGarminClient();
   const domain = getGarminDomain();
-  const dailyStepsUrl = `https://connectapi.${domain}/usersummary-service/stats/steps/daily/${monthStart}/${today}`;
-  const days = await client.get(dailyStepsUrl);
+  const days = await fetchGarminDailySteps(client, domain, monthStart, today);
   const dayStats = Array.isArray(days)
     ? days.find((entry) => entry.calendarDate === today)
     : null;
@@ -123,6 +123,32 @@ async function fetchGarminConnectSteps(today, monthStart) {
     ...monthSummary,
     date: today,
   };
+}
+
+async function fetchGarminDailySteps(client, domain, startDate, endDate) {
+  const ranges = splitDateRange(startDate, endDate);
+
+  if (ranges.length === 1) {
+    return client.get(getGarminDailyStepsUrl(domain, startDate, endDate));
+  }
+
+  const days = [];
+
+  for (const [rangeStart, rangeEnd] of ranges) {
+    const chunk = await client.get(
+      getGarminDailyStepsUrl(domain, rangeStart, rangeEnd)
+    );
+
+    if (Array.isArray(chunk)) {
+      days.push(...chunk);
+    }
+  }
+
+  return days;
+}
+
+function getGarminDailyStepsUrl(domain, startDate, endDate) {
+  return `https://connectapi.${domain}/usersummary-service/stats/steps/daily/${startDate}/${endDate}`;
 }
 
 async function fetchEndpointSteps(today, monthStart) {
@@ -476,6 +502,34 @@ function enumerateDateKeys(start, end) {
   }
 
   return dates;
+}
+
+function splitDateRange(start, end) {
+  if (!start || !end) {
+    return [];
+  }
+
+  const ranges = [];
+  let rangeStart = parseDateKey(start);
+  const last = parseDateKey(end);
+
+  while (rangeStart <= last) {
+    const rangeEnd = new Date(rangeStart.getTime());
+    rangeEnd.setUTCDate(
+      rangeEnd.getUTCDate() + MAX_GARMIN_DAILY_RANGE_LENGTH - 1
+    );
+
+    if (rangeEnd > last) {
+      rangeEnd.setTime(last.getTime());
+    }
+
+    ranges.push([formatDateKey(rangeStart), formatDateKey(rangeEnd)]);
+
+    rangeStart = new Date(rangeEnd.getTime());
+    rangeStart.setUTCDate(rangeStart.getUTCDate() + 1);
+  }
+
+  return ranges;
 }
 
 function parseDateKey(value) {
