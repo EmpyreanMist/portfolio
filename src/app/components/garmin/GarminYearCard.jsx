@@ -14,6 +14,9 @@ export default function GarminYearCard({
 }) {
   const visibleMonths = yearMonths.filter((month) => !month.future);
   const elapsedMonths = visibleMonths.length;
+  const elapsedDays = visibleMonths.reduce((sum, month) => sum + month.days, 0);
+  const dailyAverageSteps =
+    elapsedDays > 0 ? Math.round(yearSteps / elapsedDays) : null;
   const averageMonthSteps =
     elapsedMonths > 0 ? Math.round(yearSteps / elapsedMonths) : null;
   const bestMonth = visibleMonths.reduce(
@@ -40,11 +43,17 @@ export default function GarminYearCard({
         </div>
       </div>
 
-      <div className="mt-7 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-7 grid gap-5 sm:grid-cols-2 xl:grid-cols-5">
         <Metric
           label="Year to date"
           value={formatNumber(yearSteps)}
           detail={`${yearLabel} so far`}
+        />
+
+        <Metric
+          label="Daily average"
+          value={dailyAverageSteps === null ? "-" : formatNumber(dailyAverageSteps)}
+          detail={`${formatNumber(elapsedDays)} days so far`}
         />
 
         <Metric
