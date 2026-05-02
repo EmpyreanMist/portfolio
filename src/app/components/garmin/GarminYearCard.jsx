@@ -4,6 +4,10 @@ import {
   formatNumber,
   formatYearLabel,
 } from "./garminStepsUtils";
+import {
+  labsCardHoverClassName,
+  labsDataHoverClassName,
+} from "../labs/labsClassNames";
 
 export default function GarminYearCard({
   goal,
@@ -23,6 +27,8 @@ export default function GarminYearCard({
     (best, month) => (!best || month.steps > best.steps ? month : best),
     null
   );
+  const goalHitRate =
+    elapsedDays > 0 ? Math.round((yearGoalDays / elapsedDays) * 100) : null;
   const maxMonthSteps = Math.max(
     ...visibleMonths.map((month) => month.steps),
     goal,
@@ -31,7 +37,10 @@ export default function GarminYearCard({
   const yearLabel = formatYearLabel(todayKey);
 
   return (
-    <section className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm shadow-blue-500/10 dark:border-blue-400/40 dark:bg-blue-500/10 dark:shadow-none sm:p-7">
+    <section
+      tabIndex={0}
+      className={`rounded-lg border border-gray-200 bg-white p-6 shadow-sm shadow-blue-500/10 dark:border-blue-400/40 dark:bg-blue-500/10 dark:shadow-none sm:p-7 ${labsCardHoverClassName}`}
+    >
       <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h3 className="text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
@@ -80,6 +89,41 @@ export default function GarminYearCard({
         />
       </div>
 
+      <div className="grid grid-rows-[0fr] opacity-0 transition-all duration-200 ease-out group-hover:grid-rows-[1fr] group-hover:opacity-100 group-focus-within:grid-rows-[1fr] group-focus-within:opacity-100">
+        <div className="min-h-0 overflow-hidden">
+          <div className="mt-5 grid gap-3 border-t border-blue-500/10 pt-4 text-xs text-gray-600 dark:border-blue-400/20 dark:text-gray-400 sm:grid-cols-3">
+            <div className={labsDataHoverClassName}>
+              <div className="font-medium uppercase tracking-wide text-gray-500 dark:text-gray-500">
+                Tracked days
+              </div>
+              <div className="mt-1 text-sm text-gray-800 dark:text-gray-200">
+                {formatNumber(elapsedDays)} days this year
+              </div>
+            </div>
+
+            <div className={labsDataHoverClassName}>
+              <div className="font-medium uppercase tracking-wide text-gray-500 dark:text-gray-500">
+                Goal hit rate
+              </div>
+              <div className="mt-1 text-sm text-gray-800 dark:text-gray-200">
+                {goalHitRate === null ? "-" : `${goalHitRate}% of tracked days`}
+              </div>
+            </div>
+
+            <div className={labsDataHoverClassName}>
+              <div className="font-medium uppercase tracking-wide text-gray-500 dark:text-gray-500">
+                Strongest month
+              </div>
+              <div className="mt-1 text-sm text-gray-800 dark:text-gray-200">
+                {bestMonth
+                  ? `${bestMonth.month}: ${formatNumber(bestMonth.steps)} steps`
+                  : "No data yet"}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="mt-8">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
@@ -106,7 +150,7 @@ export default function GarminYearCard({
 
                 <div className="flex h-40 items-end">
                   <div
-                    className={`w-10 rounded-t-md border transition-all ${getBarColor(
+                    className={`w-10 rounded-t-md border transition-all hover:-translate-y-1 hover:scale-[1.03] ${getBarColor(
                       month
                     )} ${
                       month.isCurrent
@@ -159,7 +203,7 @@ function Metric({ label, value, detail, tone = "blue" }) {
       : "text-blue-700 dark:text-blue-400";
 
   return (
-    <div>
+    <div className={labsDataHoverClassName}>
       <div className="mb-2 text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
         {label}
       </div>

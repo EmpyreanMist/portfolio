@@ -1,3 +1,5 @@
+import { labsCardHoverClassName } from "./labs/labsClassNames";
+
 export default function LeaderboardCard({
   label,
   rank,
@@ -7,7 +9,7 @@ export default function LeaderboardCard({
 }) {
   return (
     <div
-      className="
+      className={`
         rounded-2xl p-6
         bg-white/80 backdrop-blur-sm
         border border-blue-500/10
@@ -15,11 +17,8 @@ export default function LeaderboardCard({
 
         dark:bg-slate-900/80
         dark:border-blue-500/10
-
-        hover:-translate-y-0.5
-        hover:shadow-md hover:shadow-blue-500/20
-        transition
-      "
+        ${labsCardHoverClassName}
+      `}
     >
       <h3 className="text-xs uppercase tracking-wider text-gray-500 mb-4">
         {label}

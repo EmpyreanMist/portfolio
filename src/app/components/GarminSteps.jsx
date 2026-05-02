@@ -9,6 +9,7 @@ import {
   buildFullYearMonths,
   getLocalDateKey,
 } from "./garmin/garminStepsUtils";
+import { labsCardHoverClassName } from "./labs/labsClassNames";
 
 const REFRESH_INTERVAL_MS = 60 * 60 * 1000;
 const DEFAULT_STEP_GOAL = 10000;
@@ -133,7 +134,9 @@ export default function GarminSteps() {
             )}
           </div>
         ) : (
-          <div className="flex h-[180px] items-center justify-center rounded-lg border border-gray-200 bg-white px-6 text-sm text-gray-500 dark:border-blue-400/40 dark:bg-blue-500/10 dark:text-gray-400">
+          <div
+            className={`flex h-[180px] items-center justify-center rounded-lg border border-gray-200 bg-white px-6 text-sm text-gray-500 shadow-sm shadow-blue-500/10 dark:border-blue-400/40 dark:bg-blue-500/10 dark:text-gray-400 dark:shadow-none ${labsCardHoverClassName}`}
+          >
             {steps?.error || "Garmin step data is not available yet."}
           </div>
         )}

@@ -15,17 +15,29 @@ export default function MonkeytypeStats() {
       .catch(() => setStats(null));
   }, []);
 
-  const timeTests = ["15", "30", "60", "120"].map((t) => ({
-    label: `${t}s`,
-    wpm: Math.round(stats?.personalBests?.time?.[t]?.wpm ?? 0),
-    acc: Math.round(stats?.personalBests?.time?.[t]?.acc ?? 0),
-  }));
+  const timeTests = ["15", "30", "60", "120"].map((t) => {
+    const entry = stats?.personalBests?.time?.[t];
 
-  const wordTests = ["10", "25", "50", "100"].map((w) => ({
-    label: `${w}w`,
-    wpm: Math.round(stats?.personalBests?.words?.[w]?.wpm ?? 0),
-    acc: Math.round(stats?.personalBests?.words?.[w]?.acc ?? 0),
-  }));
+    return {
+      label: `${t}s`,
+      wpm: Math.round(entry?.wpm ?? 0),
+      acc: Math.round(entry?.acc ?? 0),
+      raw: Math.round(entry?.raw ?? 0),
+      consistency: Math.round(entry?.consistency ?? 0),
+    };
+  });
+
+  const wordTests = ["10", "25", "50", "100"].map((w) => {
+    const entry = stats?.personalBests?.words?.[w];
+
+    return {
+      label: `${w}w`,
+      wpm: Math.round(entry?.wpm ?? 0),
+      acc: Math.round(entry?.acc ?? 0),
+      raw: Math.round(entry?.raw ?? 0),
+      consistency: Math.round(entry?.consistency ?? 0),
+    };
+  });
 
   const leaderboard15 = stats?.leaderboard?.english?.time?.["15s"];
   const leaderboard60 = stats?.leaderboard?.english?.time?.["60s"];

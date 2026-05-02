@@ -3,6 +3,7 @@ import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import BlueLoader from "./BlueLoader";
+import { labsCardHoverClassName } from "./labs/labsClassNames";
 
 export default function SpotifyNowPlaying() {
   const [data, setData] = useState(null);
@@ -45,6 +46,12 @@ export default function SpotifyNowPlaying() {
 
   const track = data?.track;
   const isPlaying = !!data?.isPlaying;
+  const progressMs =
+    isPlaying && localProgress != null ? localProgress : track?.progressMs ?? null;
+  const remainingMs =
+    progressMs != null && track?.durationMs != null
+      ? Math.max(track.durationMs - progressMs, 0)
+      : null;
 
   return (
     <section className="mt-32 flex flex-col items-center text-center">
@@ -63,13 +70,14 @@ export default function SpotifyNowPlaying() {
           </div>
         ) : track ? (
           <div
-            className="
-              flex items-center gap-5
+            className={`
+              flex items-start gap-5
               rounded-xl border
               border-gray-200 dark:border-blue-400/40
               bg-white dark:bg-blue-500/10
               px-6 py-4
-            "
+              ${labsCardHoverClassName}
+            `}
           >
             {track.image && (
               <Image
@@ -77,7 +85,7 @@ export default function SpotifyNowPlaying() {
                 alt={track.title}
                 width={64}
                 height={64}
-                className="rounded-md"
+                className="rounded-md transition-transform duration-200 group-hover:scale-[1.03]"
               />
             )}
 
@@ -96,19 +104,19 @@ export default function SpotifyNowPlaying() {
               </div>
 
               {isPlaying &&
-                localProgress != null &&
+                progressMs != null &&
                 track?.durationMs != null &&
                 track.durationMs > 0 && (
                   <div className="mt-2">
                     <div className="h-1 w-full bg-gray-200 dark:bg-white/10 rounded">
                       <div
-                        className="h-1 bg-blue-500 rounded"
+                        className="h-1 rounded bg-blue-500 transition-colors duration-200 group-hover:bg-blue-600 dark:group-hover:bg-blue-300"
                         style={{
                           width: `${Math.min(
                             100,
                             Math.max(
                               0,
-                              (localProgress / track.durationMs) * 100
+                              (progressMs / track.durationMs) * 100
                             )
                           )}%`,
                         }}
@@ -116,11 +124,35 @@ export default function SpotifyNowPlaying() {
                     </div>
 
                     <div className="mt-1 text-[11px] text-gray-500 dark:text-gray-400 flex justify-between">
-                      <span>{formatTime(localProgress)}</span>
+                      <span>{formatTime(progressMs)}</span>
                       <span>{formatTime(track.durationMs)}</span>
                     </div>
                   </div>
                 )}
+
+              <div className="grid grid-rows-[0fr] opacity-0 transition-all duration-200 ease-out group-hover:grid-rows-[1fr] group-hover:opacity-100 group-focus-within:grid-rows-[1fr] group-focus-within:opacity-100">
+                <div className="min-h-0 overflow-hidden">
+                  <div className="mt-4 flex flex-wrap gap-2 text-[11px] text-gray-500 dark:text-gray-400">
+                    {track.album && (
+                      <span className="rounded-full border border-blue-500/10 bg-blue-50 px-2.5 py-1 dark:border-blue-400/20 dark:bg-blue-400/10">
+                        Album: {track.album}
+                      </span>
+                    )}
+                    {remainingMs != null && (
+                      <span className="rounded-full border border-blue-500/10 bg-blue-50 px-2.5 py-1 dark:border-blue-400/20 dark:bg-blue-400/10">
+                        {isPlaying
+                          ? `${formatTime(remainingMs)} left`
+                          : `Length ${formatTime(track.durationMs)}`}
+                      </span>
+                    )}
+                    {!isPlaying && data?.lastPlayedAt && (
+                      <span className="rounded-full border border-blue-500/10 bg-blue-50 px-2.5 py-1 dark:border-blue-400/20 dark:bg-blue-400/10">
+                        Seen {formatSeenAt(data.lastPlayedAt)}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
             </div>
 
             {track.url && (
@@ -131,7 +163,7 @@ export default function SpotifyNowPlaying() {
                   text-xs
                   text-blue-600 hover:text-blue-700
                   dark:text-blue-400 dark:hover:text-blue-300
-                  transition-colors
+                  self-start transition-colors
                 "
               >
                 Open
@@ -139,7 +171,9 @@ export default function SpotifyNowPlaying() {
             )}
           </div>
         ) : (
-          <div className="h-[120px] flex items-center justify-center text-sm text-gray-400">
+          <div
+            className={`flex h-[120px] items-center justify-center rounded-xl border border-gray-200 bg-white px-6 text-sm text-gray-400 shadow-sm shadow-blue-500/10 dark:border-blue-400/40 dark:bg-blue-500/10 dark:shadow-none ${labsCardHoverClassName}`}
+          >
             Not listening right now.
           </div>
         )}
@@ -165,4 +199,11 @@ function formatTime(ms) {
   const minutes = Math.floor(totalSeconds / 60);
   const seconds = totalSeconds % 60;
   return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+}
+
+function formatSeenAt(value) {
+  return new Intl.DateTimeFormat("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(new Date(value));
 }
